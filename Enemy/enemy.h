@@ -1,0 +1,31 @@
+#ifndef ENEMY_H
+#define ENEMY_H
+
+#include "../core.h"
+#include "../basic.h"
+
+namespace Skyrim {
+
+    // ENEMIES
+    class Enemy {
+    protected:
+        string name;
+        ushort health;
+        ushort level;
+        ushort damage;
+    public:
+        explicit Enemy(string name, ushort level = 1, ushort health = 100, ushort damage = 1);
+
+        virtual ushort attack();
+
+        string getName() const;
+
+        ushort getHealth() const;
+
+        ushort getLevel() const;
+
+        bool getsAttacked(ushort);
+    };
+}
+
+#endif // ENEMY_H
