@@ -13,9 +13,8 @@ MatchWindow::MatchWindow(QWidget *parent, string playerName) :
 
     game->newGame(playerName);
 
-    bool started = false;
     try {
-        started = game->startMatch();
+        game->startMatch();
     } catch(Skyrim::NoPlayerLoaded) {
         QtSupport::error("No player loaded. Something went wrong.");
     }
@@ -55,9 +54,6 @@ void MatchWindow::generateEnemy() {
         game->setEnemy(enemy);
 
         if (game->isEnemySpawned()) {
-            cout << "An enemy spawned: " << enemy->getName() << " (health: " << enemy->getHealth()
-                 << ", level: " << enemy->getLevel() << ")" << endl;
-
             ui->dyamicButton->setText("Attack!");
             setEnemyVisibility(true);
         } else {
@@ -90,10 +86,16 @@ void MatchWindow::updateInventory() {
     ui->inventoryList->setModel(model);
 }
 
-void MatchWindow::nextTurn() {
+void MatchWindow::updatePlayerInfo() {
     ui->playerLabel->setText(QString::fromStdString(game->getPlayer()->getName()) + " - Level " + QString::number(game->getPlayer()->getLevel()));
     ui->playerHealth->setText(QString::number(game->getPlayer()->getHealth()) + "/" + QString::number(game->getPlayer()->getMaxHealth()));
     ui->playerHealthBar->setValue(getValueForHealth(game->getPlayer()->getHealth(), game->getPlayer()->getMaxHealth()));
+
+    ui->healButton->setText("Use healing potion (" + QString::number(game->getPlayer()->getHealPotion()) + ")");
+}
+
+void MatchWindow::nextTurn() {
+    updatePlayerInfo();
 
     if (!game->isEnemySpawned()) {
         setEnemyVisibility(false);
@@ -105,14 +107,11 @@ void MatchWindow::nextTurn() {
         ui->enemyHealthBar->setValue(getValueForHealth(game->getEnemy()->getHealth(), game->getEnemy()->getMaxHealth()));
     }
 
-    ui->healButton->setText("Use healing potion (" + QString::number(game->getPlayer()->getHealPotion()) + ")");
-
     updateInventory();
 }
 
 void MatchWindow::on_dyamicButton_clicked() {
     if (game->isEnemySpawned()) {
-        Console::printStd("Attacking");
         if (game->getEnemy()->getsAttacked(game->getPlayer()->attack())) {
             game->enemyDie();
         } else {
@@ -123,8 +122,6 @@ void MatchWindow::on_dyamicButton_clicked() {
                 this->close();
             }
         }
-    } else {
-        Console::printStd("Moving on");
     }
 
     nextTurn();
@@ -133,4 +130,14 @@ void MatchWindow::on_dyamicButton_clicked() {
 void MatchWindow::on_inventoryList_clicked(const QModelIndex &index)
 {
     ushort row = index.row();
+}
+
+void MatchWindow::on_healButton_clicked()
+{
+    if (game->getPlayer()->getHealPotion() > 0) {
+        game->getPlayer()->heals();
+        updatePlayerInfo();
+    } else {
+        QtSupport::warning("You don't have any healing potion.. you're screwed HEHEHEHE");
+    }
 }

@@ -19,7 +19,6 @@ bool Skyrim::QtGame::newGame(string playerName) {
         delete player;
     }
     player = new Player(playerName);
-    Console::printStd("Player loaded correctly");
     return true;
 }
 
@@ -35,8 +34,6 @@ bool Skyrim::QtGame::startMatch() {
     if (enemy != nullptr) {
         enemy = nullptr;
     }
-
-    Console::printStd("Game started, good luck!");
 
     return true;
 }

@@ -92,13 +92,10 @@ bool Skyrim::Player::getsAttacked(ushort damage) {
 }
 
 void Skyrim::Player::gainExperience(ushort xp) {
-    cout << "Gained " << xp << " experience points" << endl;
     experience += xp;
 
     if (experience >= 30 * level) { // level up
         level++;
-        cout << "Level up! You've reached level " << level << ". Congrats!" << endl;
-        //health = getMaxHealth();
     }
 }
 
@@ -112,7 +109,7 @@ void Skyrim::Player::heals() {
 
         this->health += 10 * level;
         if (this->health > getMaxHealth()) {
-            this->health = MAX_HEALTH;
+            this->health = getMaxHealth();
         }
     }
 }

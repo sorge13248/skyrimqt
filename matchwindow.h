@@ -27,11 +27,14 @@ private slots:
 
     void on_inventoryList_clicked(const QModelIndex &index);
 
+    void on_healButton_clicked();
+
 private:
     Ui::MatchWindow *ui;
     Skyrim::QtGame* game;
 
     void generateEnemy();
+    void updatePlayerInfo();
     void nextTurn();
     void setEnemyVisibility(bool);
     ushort getValueForHealth(ushort health, ushort maxHealth);
