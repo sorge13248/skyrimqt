@@ -65,3 +65,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     matchwindow.ui
+
+RESOURCES += \
+    image.qrc

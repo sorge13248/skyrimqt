@@ -27,7 +27,7 @@ void MainWindow::on_newGameButton_clicked()
         QtSupport::error("Player name is mandatory!");
     } else {
         Console::printQ(playerName);
-        MatchWindow* game = new MatchWindow(nullptr, playerName);
+        MatchWindow* game = new MatchWindow(nullptr, playerName.toStdString());
         game->show();
         this->close();
     }

@@ -1,10 +1,10 @@
 #include "Enemy/enemy.h"
 
 Skyrim::Enemy::Enemy(string name, ushort level, ushort health, ushort damage)
-: name(name), level(level == 0 ? 1 : level), health(health * level), damage(damage) {}
+: name(name), level(level == 0 ? 1 : level), health(health * level), damage(damage), MAX_HEALTH(health * level) {}
 
 ushort Skyrim::Enemy::attack() {
-    return FrancescoSorge::Basic::random(1, 5) * level;
+    return FrancescoSorge::Basic::random(2, 6) * level;
 }
 
 string Skyrim::Enemy::getName() const {
@@ -26,4 +26,8 @@ bool Skyrim::Enemy::getsAttacked(ushort damage) {
         health -= damage;
         return false;
     }
+}
+
+ushort Skyrim::Enemy::getMaxHealth() const {
+    return MAX_HEALTH;
 }

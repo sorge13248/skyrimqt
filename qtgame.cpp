@@ -14,7 +14,7 @@ Skyrim::Enemy* Skyrim::QtGame::getEnemy() const {
     return enemy;
 }
 
-bool Skyrim::QtGame::newGame(const QString& playerName) {
+bool Skyrim::QtGame::newGame(string playerName) {
     if (player != nullptr) {
         delete player;
     }
@@ -54,15 +54,18 @@ bool Skyrim::QtGame::setPlayer(Player* const player) {
     }
 }
 
-bool Skyrim::QtGame::setEnemy(Enemy* const enemy) {
-    if (enemy != nullptr) {
-        this->enemy = enemy;
-        return true;
-    } else {
-        return false;
-    }
+void Skyrim::QtGame::setEnemy(Enemy* const enemy) {
+    this->enemy = enemy;
 }
 
 bool Skyrim::QtGame::playerEquipItem(Item* const item) {
     return player->equipItem(item);
+}
+
+void Skyrim::QtGame::enemyDie() {
+    player->gainExperience(10 * enemy->getLevel());
+    player->addHealPotion(enemy->getLevel());
+
+    if (enemy) delete enemy;
+    setEnemy(nullptr);
 }

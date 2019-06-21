@@ -1,10 +1,10 @@
 #include "player.h"
 
-Skyrim::Player::Player(const QString& name, ushort health, ushort experience, ushort level, ushort healPotion) : name(name), health(health == 0 ? 1 : health), experience(experience), level(level == 0 ? 1 : level), healPotion(healPotion), inventory(new FrancescoSorge::QContainer<Item*>()) {
+Skyrim::Player::Player(string name, ushort health, ushort experience, ushort level, ushort healPotion) : name(name), health(health), experience(experience), level(level == 0 ? 1 : level), healPotion(healPotion), inventory(new FrancescoSorge::QContainer<Item*>()) {
 
 }
 
-const QString& Skyrim::Player::getName() const {
+string Skyrim::Player::getName() const {
     return name;
 }
 
@@ -76,8 +76,12 @@ ushort Skyrim::Player::attack() const {
 }
 
 bool Skyrim::Player::getsAttacked(ushort damage) {
-    damage -= shield->getAbsorb();
-    if (damage < 0) damage = 0;
+    if (damage - shield->getAbsorb() <= 0) {
+        damage = 1;
+    } else {
+        damage -= shield->getAbsorb();
+    }
+
 
     if (health - damage <= 0) {
         return true;
@@ -91,10 +95,15 @@ void Skyrim::Player::gainExperience(ushort xp) {
     cout << "Gained " << xp << " experience points" << endl;
     experience += xp;
 
-    if (experience >= 20 * level) { // level up
+    if (experience >= 30 * level) { // level up
         level++;
         cout << "Level up! You've reached level " << level << ". Congrats!" << endl;
+        //health = getMaxHealth();
     }
+}
+
+ushort Skyrim::Player::getMaxHealth() const {
+    return MAX_HEALTH * level;
 }
 
 void Skyrim::Player::heals() {
@@ -102,10 +111,14 @@ void Skyrim::Player::heals() {
         this->healPotion--;
 
         this->health += 10 * level;
-        if (this->health > MAX_HEALTH * level) {
+        if (this->health > getMaxHealth()) {
             this->health = MAX_HEALTH;
         }
     }
+}
+
+ushort Skyrim::Player::getExperience() const {
+    return experience;
 }
 
 ushort Skyrim::Player::MAX_HEALTH = 100;

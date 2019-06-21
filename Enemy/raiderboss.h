@@ -13,6 +13,7 @@ namespace Skyrim {
     class RaiderBoss : public Raider {
     public:
         explicit RaiderBoss(ushort level = 1);
+        ~RaiderBoss() = default;
 
         virtual ushort attack();
     };

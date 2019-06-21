@@ -13,7 +13,7 @@ namespace Skyrim {
     // PLAYER
     class Player {
     private:
-        const QString& name;
+        string name;
         ushort health;
         ushort experience;
         ushort level;
@@ -29,19 +29,16 @@ namespace Skyrim {
 
 
     public:
-        explicit Player(const QString& name, ushort health = 100, ushort experience = 0, ushort level = 1, ushort healPotion = 2);
+        explicit Player(string name, ushort health = 100, ushort experience = 0, ushort level = 1, ushort healPotion = 2);
 
-        const QString& getName() const;
-
+        string getName() const;
         ushort getHealth() const;
-
         ushort getLevel() const;
-
         ushort getHealPotion() const;
-
         FrancescoSorge::QContainer<Item*>* getInventory() const;
-
         ushort getMaxInventory() const;
+        ushort getMaxHealth() const;
+        ushort getExperience() const;
 
         Item* addToInventory(Item*);
 

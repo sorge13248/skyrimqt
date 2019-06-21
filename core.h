@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <random>
+#include "console.h"
+#include "qtsupport.h"
 
 using std::cin;
 using std::cout;

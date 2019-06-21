@@ -13,6 +13,7 @@ namespace Skyrim {
     class Ghost : public Enemy {
     public:
         explicit Ghost(ushort level = 1);
+        ~Ghost() = default;
 
         virtual ushort attack();
 

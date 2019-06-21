@@ -12,6 +12,7 @@ namespace Skyrim {
     class Animal : public Enemy {
     public:
         explicit Animal(ushort level = 1);
+        ~Animal() = default;
 
         virtual ushort attack();
     };

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "qtgame.h"
 #include "qtsupport.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class MatchWindow;
@@ -14,9 +15,8 @@ class MatchWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit MatchWindow(QWidget *parent = 0, const QString& playerName="New player");
+    explicit MatchWindow(QWidget *parent = 0, string playerName="New player");
     ~MatchWindow();
-    void generateEnemy();
 
 private slots:
     void on_dyamicButton_clicked();
@@ -24,6 +24,11 @@ private slots:
 private:
     Ui::MatchWindow *ui;
     Skyrim::QtGame* game;
+
+    void generateEnemy();
+    void nextTurn();
+    void setEnemyVisibility(bool);
+    ushort getValueForHealth(ushort health, ushort maxHealth);
 };
 
 #endif // MATCHWINDOW_H

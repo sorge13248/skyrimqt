@@ -28,12 +28,13 @@ namespace Skyrim {
         bool isEnemySpawned() const;
 
         bool setPlayer(Player* const);
-        bool setEnemy(Enemy* const);
+        void setEnemy(Enemy* const);
 
-        bool newGame(const QString&);
+        bool newGame(string);
         void loadGame();
         bool startMatch();
         bool playerEquipItem(Item* const);
+        void enemyDie();
 
     };
 }
