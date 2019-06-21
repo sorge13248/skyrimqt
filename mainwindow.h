@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QInputDialog>
+#include <QDesktopWidget>
 #include "qtsupport.h"
 #include "console.h"
 #include "qtgame.h"

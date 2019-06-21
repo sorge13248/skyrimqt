@@ -7,6 +7,10 @@ MatchWindow::MatchWindow(QWidget *parent, string playerName) :
     game(new Skyrim::QtGame())
 {
     ui->setupUi(this);
+
+    const QRect screen = QApplication::desktop()->screenGeometry();
+    this->move(screen.center() - this->rect().center());
+
     game->newGame(playerName);
 
     bool started = false;
@@ -16,8 +20,14 @@ MatchWindow::MatchWindow(QWidget *parent, string playerName) :
         QtSupport::error("No player loaded. Something went wrong.");
     }
 
-    game->playerEquipItem(new Skyrim::Weapon("Iron Sword"));
-    game->playerEquipItem(new Skyrim::Shield("Wood Shield"));
+    Skyrim::Weapon* sword = new Skyrim::Weapon("Iron Sword");
+    Skyrim::Shield* shield = new Skyrim::Shield("Wood Shield");
+
+    game->playerEquipItem(sword);
+    game->playerEquipItem(shield);
+
+    game->getPlayer()->addToInventory(sword);
+    game->getPlayer()->addToInventory(shield);
 
     nextTurn();
 }
@@ -66,6 +76,20 @@ ushort MatchWindow::getValueForHealth(ushort health, ushort maxHealth) {
     return health * 100 / maxHealth;
 }
 
+void MatchWindow::updateInventory() {
+    ui->inventoryLabel->setText("Inventory (" + QString::number(game->getPlayer()->getInventory()->getCount()) + "/" + QString::number(game->getPlayer()->getMaxInventory()) + "):");
+
+    QStringListModel* model = new QStringListModel(this);
+
+    QStringList list;
+    for (FrancescoSorge::QContainer<Skyrim::Item*>::constiterator it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
+        list << QString::fromStdString((*it)->getName() + " (Level " + std::to_string((*it)->getLevel()) + ")");
+    }
+
+    model->setStringList(list);
+    ui->inventoryList->setModel(model);
+}
+
 void MatchWindow::nextTurn() {
     ui->playerLabel->setText(QString::fromStdString(game->getPlayer()->getName()) + " - Level " + QString::number(game->getPlayer()->getLevel()));
     ui->playerHealth->setText(QString::number(game->getPlayer()->getHealth()) + "/" + QString::number(game->getPlayer()->getMaxHealth()));
@@ -82,6 +106,8 @@ void MatchWindow::nextTurn() {
     }
 
     ui->healButton->setText("Use healing potion (" + QString::number(game->getPlayer()->getHealPotion()) + ")");
+
+    updateInventory();
 }
 
 void MatchWindow::on_dyamicButton_clicked() {
@@ -91,7 +117,7 @@ void MatchWindow::on_dyamicButton_clicked() {
             game->enemyDie();
         } else {
             if (game->getPlayer()->getsAttacked(game->getEnemy()->attack())) {
-                QtSupport::error("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
+                QtSupport::info("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
                 MainWindow* main = new MainWindow(nullptr);
                 main->show();
                 this->close();
@@ -102,4 +128,9 @@ void MatchWindow::on_dyamicButton_clicked() {
     }
 
     nextTurn();
+}
+
+void MatchWindow::on_inventoryList_clicked(const QModelIndex &index)
+{
+    ushort row = index.row();
 }

@@ -5,3 +5,16 @@ void QtSupport::error(const QString& message, const QString& title, ushort width
     messageBox->critical(0, title, message);
     messageBox->setFixedSize(width, height);
 }
+
+void QtSupport::info(const QString& message, const QString& title, ushort width, ushort height) {
+    QMessageBox* messageBox = new QMessageBox();
+    messageBox->information(0, title, message);
+    messageBox->setFixedSize(width, height);
+}
+
+
+void QtSupport::warning(const QString& message, const QString& title, ushort width, ushort height) {
+    QMessageBox* messageBox = new QMessageBox();
+    messageBox->warning(0, title, message);
+    messageBox->setFixedSize(width, height);
+}

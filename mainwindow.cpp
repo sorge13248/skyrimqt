@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    const QRect screen = QApplication::desktop()->screenGeometry();
+    this->move(screen.center() - this->rect().center());
 }
 
 MainWindow::~MainWindow()

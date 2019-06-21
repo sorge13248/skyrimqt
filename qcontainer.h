@@ -2,11 +2,13 @@
 #define QCONTAINER_H
 
 #include "core.h"
+#include "Item/item.h"
 
 namespace FrancescoSorge {
     template<class T>
     class QContainer {
     private:
+        ushort count;
 
         class node {
         public:
@@ -25,18 +27,20 @@ namespace FrancescoSorge {
         }
 
     public:
-        explicit QContainer() {
+        explicit QContainer() : count(0) {
 
         }
 
         QContainer(const QContainer& dl) {
-            first = copy(dl.first,last);
+            first = copy(dl.first, last);
+            count = dl.count;
         }
 
         QContainer& operator=(const QContainer& dl) {
             if(this != &dl) {
                 if(first) delete first;
-                first=copy(dl.first,last);
+                first = copy(dl.first, last);
+                count = dl.count;
             }
             return *this;
         }
@@ -46,12 +50,14 @@ namespace FrancescoSorge {
             first = new node(t,nullptr,first);
             if(last == nullptr) {last = first;}
             else {(first->next)->prev = first;}
+            count++;
         }
 
         void insertBack(const T& t) {
             last = new node(t,last,nullptr);
             if(first == nullptr) {first = last;}
             else {(last->prev)->next = last;}
+            count++;
         }
 
         explicit QContainer(int k, const T& t): first(nullptr), last(nullptr) {
@@ -62,13 +68,7 @@ namespace FrancescoSorge {
             return lexCompare(first,dl.first);
         }
 
-        ushort count() const {
-            ushort count = 0;
-            node* node = first;
-            while (node) {
-                node = node->next;
-                count++;
-            }
+        ushort getCount() const {
             return count;
         }
 

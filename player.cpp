@@ -25,11 +25,11 @@ FrancescoSorge::QContainer<Skyrim::Item*>* Skyrim::Player::getInventory() const 
 }
 
 ushort Skyrim::Player::getMaxInventory() const {
-    return MAX_INVENTORY * level;
+    return MAX_INVENTORY + level;
 }
 
 Skyrim::Item* Skyrim::Player::addToInventory(Item* item) {
-    if (inventory->count() < getMaxInventory()) {
+    if (inventory->getCount() < getMaxInventory()) {
         inventory->insertBack(item);
         return item;
     }
@@ -123,4 +123,4 @@ ushort Skyrim::Player::getExperience() const {
 
 ushort Skyrim::Player::MAX_HEALTH = 100;
 ushort Skyrim::Player::MAX_HEAL_POTION = 2;
-ushort Skyrim::Player::MAX_INVENTORY = 10;
+ushort Skyrim::Player::MAX_INVENTORY = 9;
