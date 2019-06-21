@@ -3,8 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    game(new Skyrim::QtGame())
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
@@ -25,12 +24,11 @@ void MainWindow::on_newGameButton_clicked()
                                              tr("Player name:"), QLineEdit::Normal,
                                              "");
     if (playerName.isEmpty()) {
-        QMessageBox* messageBox = new QMessageBox();
-        messageBox->critical(0, "Error", "Player name is mandatory");
-        messageBox->setFixedSize(500, 200);
+        QtSupport::error("Player name is mandatory!");
     } else {
-        Console::print(playerName);
-        game->newGame(playerName);
-        game->startMatch();
+        Console::printQ(playerName);
+        MatchWindow* game = new MatchWindow(nullptr, playerName);
+        game->show();
+        this->close();
     }
 }

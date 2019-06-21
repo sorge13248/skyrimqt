@@ -6,7 +6,8 @@
 class Console
 {
 public:
-    static void print(const QString&);
+    static void printQ(const QString&, const bool b=true);
+    static void printStd(const std::string, const bool b=true);
 };
 
 #endif // CONSOLE_H

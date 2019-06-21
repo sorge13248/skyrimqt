@@ -8,17 +8,17 @@ namespace FrancescoSorge {
     class QContainer {
     private:
 
-        class nodo {
+        class node {
         public:
             T info;
-            nodo *prev,*next;
-            explicit nodo(const T& t, nodo* p=0, nodo* n=0): info(t), prev(p), next(n) {}
-            ~nodo() {if(next) delete next;}
+            node *prev,*next;
+            explicit node(const T& t, node* p=0, node* n=0): info(t), prev(p), next(n) {}
+            ~node() {if(next) delete next;}
         };
 
-        nodo *first, *last;
+        node *first, *last;
 
-        static bool lexCompare(nodo* f1, nodo* f2) {
+        static bool lexCompare(node* f1, node* f2) {
             if(!f2) return false;
             if(!f1) return true;
             return f1->info < f2->info || (f1->info == f2->info && lexCompare(f1->next,f2->next));
@@ -43,13 +43,13 @@ namespace FrancescoSorge {
         ~QContainer() {if(first) delete first;}
 
         void insertFront(const T& t) {
-            first = new nodo(t,nullptr,first);
+            first = new node(t,nullptr,first);
             if(last == nullptr) {last = first;}
             else {(first->next)->prev = first;}
         }
 
         void insertBack(const T& t) {
-            last = new nodo(t,last,nullptr);
+            last = new node(t,last,nullptr);
             if(first == nullptr) {first = last;}
             else {(last->prev)->next = last;}
         }
@@ -64,9 +64,9 @@ namespace FrancescoSorge {
 
         ushort count() const {
             ushort count = 0;
-            nodo* nodo = first;
-            while (nodo) {
-                nodo = nodo->next;
+            node* node = first;
+            while (node) {
+                node = node->next;
                 count++;
             }
             return count;
@@ -75,9 +75,9 @@ namespace FrancescoSorge {
         class constiterator {
             friend class QContainer<T>;
         private:
-            const nodo* pt;
+            const node* pt;
             bool pte; // true if past-the-end
-            explicit constiterator(nodo* p, bool b=false): pt(p), pte(b) {}
+            explicit constiterator(node* p, bool b=false): pt(p), pte(b) {}
         public:
             explicit constiterator(): pt(nullptr), pte(false) {}
 

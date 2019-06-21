@@ -13,8 +13,11 @@ namespace Skyrim {
         string const type = "Weapon";
 
         explicit Weapon(string name, ushort level = 1, ushort damage = 15);
+        ~Weapon() = default;
 
         ushort getDamage() const;
+
+
     };
 }
 

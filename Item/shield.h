@@ -13,6 +13,7 @@ namespace Skyrim {
         string const type = "Shield";
 
         explicit Shield(string name, ushort level = 1, ushort absorb = 12);
+        ~Shield() = default;
 
         ushort getAbsorb() const;
     };

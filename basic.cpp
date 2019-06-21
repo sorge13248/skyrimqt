@@ -2,6 +2,7 @@
 // Created by fsorge on 6/8/19.
 //
 
+#include <string>
 #include "core.h"
 #include "basic.h"
 

@@ -20,7 +20,7 @@ namespace Skyrim {
         Quality quality;
 
     public:
-        string const type;
+        const string type;
 
         explicit Item(string, ushort);
         virtual ~Item() = default;

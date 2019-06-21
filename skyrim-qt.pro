@@ -38,7 +38,9 @@ SOURCES += \
     qcontainer.cpp \
     Item/weapon.cpp \
     Item/item.cpp \
-    Item/shield.cpp
+    Item/shield.cpp \
+    matchwindow.cpp \
+    qtsupport.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -56,7 +58,10 @@ HEADERS += \
     qcontainer.h \
     Item/weapon.h \
     Item/item.h \
-    Item/shield.h
+    Item/shield.h \
+    matchwindow.h \
+    qtsupport.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    matchwindow.ui

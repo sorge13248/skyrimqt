@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "core.h"
+#include "Item/item.h"
 #include "Item/weapon.h"
 #include "Item/shield.h"
 #include "qcontainer.h"
@@ -18,8 +19,8 @@ namespace Skyrim {
         ushort level;
         ushort healPotion;
 
-        Weapon *weapon;
-        Shield *shield;
+        Weapon *weapon = nullptr;
+        Shield *shield = nullptr;
         FrancescoSorge::QContainer<Item*>* inventory;
 
         static ushort MAX_HEAL_POTION;
@@ -42,11 +43,11 @@ namespace Skyrim {
 
         ushort getMaxInventory() const;
 
-        bool addToInventory(Item*);
+        Item* addToInventory(Item*);
 
         void addHealPotion(ushort);
 
-        void equipItem(Item*);
+        bool equipItem(Item*);
 
         void dropItem(Item*);
 

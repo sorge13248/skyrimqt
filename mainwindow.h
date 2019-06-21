@@ -4,9 +4,10 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QInputDialog>
-#include <QMessageBox>
+#include "qtsupport.h"
 #include "console.h"
 #include "qtgame.h"
+#include "matchwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,8 +18,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    Skyrim::QtGame* game;
-
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 

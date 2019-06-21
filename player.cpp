@@ -28,12 +28,12 @@ ushort Skyrim::Player::getMaxInventory() const {
     return MAX_INVENTORY * level;
 }
 
-bool Skyrim::Player::addToInventory(Item* item) {
+Skyrim::Item* Skyrim::Player::addToInventory(Item* item) {
     if (inventory->count() < getMaxInventory()) {
         inventory->insertBack(item);
-        return true;
+        return item;
     }
-    return false;
+    return nullptr;
 }
 
 
@@ -47,26 +47,24 @@ void Skyrim::Player::addHealPotion(ushort potion) {
     }
 }
 
-void Skyrim::Player::equipItem(Item* item) {
+bool Skyrim::Player::equipItem(Item* item) {
     bool isTheSame = false;
     if (Weapon* wp = dynamic_cast<Weapon*>(item)) {
         if (wp == weapon) {
             isTheSame = true;
         } else {
-            delete weapon;
+            if (weapon) delete weapon;
             weapon = wp;
         }
     } else if (Shield* sh = dynamic_cast<Shield*>(item)) {
         if (sh == shield) {
             isTheSame = true;
         } else {
-            delete shield;
+            if (shield) delete shield;
             shield = sh;
         }
     }
-    if (!isTheSame) {
-        cout << item->getName() << " equipped" << endl;
-    }
+    return !isTheSame;
 }
 
 void Skyrim::Player::dropItem(Item* item) {

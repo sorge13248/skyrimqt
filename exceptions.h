@@ -3,9 +3,7 @@
 
 namespace Skyrim {
     // ERRORS
-    enum Exceptions {
-        NoPlayerLoaded
-    };
+    class NoPlayerLoaded { };
 }
 
 #endif // EXCEPTIONS_H
