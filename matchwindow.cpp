@@ -19,6 +19,8 @@ MatchWindow::MatchWindow(QWidget *parent, const string playerName) :
         game->startMatch();
     } catch(Skyrim::NoPlayerLoaded) {
         QtSupport::error("No player loaded. Something went wrong.");
+        showMainWindow();
+        this->close();
     }
 
     Skyrim::Weapon* sword = new Skyrim::Weapon("Iron Sword");
@@ -137,9 +139,6 @@ void MatchWindow::on_dyamicButton_clicked() {
         } else {
             if (game->getPlayer()->getsAttacked(game->getEnemy()->attack())) {
                 QtSupport::info("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
-                MainWindow* main = new MainWindow(nullptr);
-                main->show();
-                this->close();
             }
         }
     }
@@ -177,10 +176,7 @@ void MatchWindow::on_exitButton_clicked()
     if (editedFromLastSave) {
         switch (QtSupport::dialog("Game not saved", "Would you like to save the game before exiting?", QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)) {
             case QMessageBox::Save:
-
-                break;
-            case QMessageBox::Discard:
-
+                on_saveButton_clicked();
                 break;
             case QMessageBox::Cancel:
                 close = false;
@@ -188,5 +184,35 @@ void MatchWindow::on_exitButton_clicked()
         }
     }
 
-    if (close) this->close();
+    if (close) {
+        showMainWindow();
+        this->close();
+    }
+}
+
+void MatchWindow::showMainWindow() {
+    MainWindow* main = new MainWindow(nullptr);
+    main->show();
+}
+
+void MatchWindow::on_saveButton_clicked()
+{
+    QVariantMap map;
+    map.insert("name", QString::fromStdString(game->getPlayer()->getName()));
+    map.insert("level", game->getPlayer()->getLevel());
+    map.insert("health", game->getPlayer()->getHealth());
+    map.insert("experience", game->getPlayer()->getExperience());
+    map.insert("healPotion", game->getPlayer()->getHealPotion());
+    if (game->isEnemySpawned()) {
+        QVariantMap enemy;
+        enemy.insert("name", QString::fromStdString(game->getEnemy()->getName()));
+        enemy.insert("level", game->getEnemy()->getLevel());
+        enemy.insert("health", game->getEnemy()->getHealth());
+        enemy.insert("damage", game->getEnemy()->getDamage());
+
+        map.insert("enemy", enemy);
+    }
+    QJsonObject object = QJsonObject::fromVariantMap(map);
+
+    QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".json", object);
 }

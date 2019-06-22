@@ -21,14 +21,11 @@ namespace Skyrim {
         virtual ushort attack();
 
         string getName() const;
-
         ushort getHealth() const;
-
         ushort getLevel() const;
-
         bool getsAttacked(ushort);
-
         ushort getMaxHealth() const;
+        ushort getDamage() const;
     };
 }
 

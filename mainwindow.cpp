@@ -32,3 +32,10 @@ void MainWindow::on_newGameButton_clicked()
         this->close();
     }
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    foreach(QString filename, QtSupport::listFiles(QDir("."), QStringList() << "*.json" << "*.JSON")) {
+        Console::printQ(filename);
+    }
+}

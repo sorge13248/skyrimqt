@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDesktopWidget>
 #include <QStringListModel>
+#include <QJsonObject>
 #include "qtgame.h"
 #include "qtsupport.h"
 #include "Item/weapon.h"
@@ -24,14 +25,14 @@ public:
     explicit MatchWindow(QWidget *parent = 0, string playerName = "New player");
     ~MatchWindow();
 
-    void updateInventory();
-
 private slots:
     void on_dyamicButton_clicked();
     void on_inventoryList_clicked(const QModelIndex&);
     void on_healButton_clicked();
 
     void on_exitButton_clicked();
+
+    void on_saveButton_clicked();
 
 private:
     Ui::MatchWindow *ui;
@@ -43,6 +44,8 @@ private:
     void nextTurn();
     void setEnemyVisibility(bool);
     ushort getValueForHealth(ushort, ushort);
+    void updateInventory();
+    void showMainWindow();
 };
 
 #endif // MATCHWINDOW_H

@@ -31,3 +31,22 @@ int QtSupport::dialog(QString title, QString content, QMessageBox::StandardButto
     msgBox.setDefaultButton(button);
     return msgBox.exec();
 }
+
+QJsonDocument QtSupport::loadJson(QString fileName) {
+    QFile jsonFile(fileName);
+    jsonFile.open(QFile::ReadOnly);
+    return QJsonDocument().fromJson(jsonFile.readAll());
+}
+
+void QtSupport::saveJson(QString fileName, QJsonObject object) {
+    QJsonDocument document;
+    document.setObject(object);
+    QFile jsonFile(fileName);
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(document.toJson());
+}
+
+QStringList QtSupport::listFiles(QDir directory, QStringList filter) {
+    //assume the directory exists and contains some files and you want all jpg and JPG files
+    return directory.entryList(filter, QDir::Files);
+}

@@ -26,6 +26,8 @@ private slots:
     void on_exitButton_clicked();
     void on_newGameButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
