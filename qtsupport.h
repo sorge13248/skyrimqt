@@ -12,6 +12,7 @@ public:
     static void info(const QString&, const QString& title="Info", ushort width=400, ushort height=200);
     static void warning(const QString&, const QString& title="Warning", ushort width=400, ushort height=200);
     static QString input(QWidget*, QString, QString, QString p="");
+    static int dialog(QString, QString, QMessageBox::StandardButtons, QMessageBox::StandardButton);
 };
 
 #endif // QTSUPPORT_H

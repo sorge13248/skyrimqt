@@ -4,7 +4,8 @@
 MatchWindow::MatchWindow(QWidget *parent, const string playerName) :
     QWidget(parent),
     ui(new Ui::MatchWindow),
-    game(new Skyrim::QtGame())
+    game(new Skyrim::QtGame()),
+    editedFromLastSave(true)
 {
     ui->setupUi(this);
 
@@ -74,6 +75,8 @@ ushort MatchWindow::getValueForHealth(ushort health, ushort maxHealth) {
 }
 
 void MatchWindow::updateInventory() {
+    editedFromLastSave = true;
+
     ui->inventoryLabel->setText("Inventory (" + QString::number(game->getPlayer()->getInventory()->getCount()) + "/" + QString::number(game->getPlayer()->getMaxInventory()) + "):");
 
     QStringListModel* model = new QStringListModel(this);
@@ -166,4 +169,24 @@ void MatchWindow::on_healButton_clicked()
     } else {
         QtSupport::warning("You don't have any healing potion.. you're screwed HEHEHEHE");
     }
+}
+
+void MatchWindow::on_exitButton_clicked()
+{
+    bool close = true;
+    if (editedFromLastSave) {
+        switch (QtSupport::dialog("Game not saved", "Would you like to save the game before exiting?", QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)) {
+            case QMessageBox::Save:
+
+                break;
+            case QMessageBox::Discard:
+
+                break;
+            case QMessageBox::Cancel:
+                close = false;
+                break;
+        }
+    }
+
+    if (close) this->close();
 }

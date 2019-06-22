@@ -676,7 +676,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="saveAndExitButton">
+        <widget class="QPushButton" name="saveButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -684,7 +684,20 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Save &amp;&amp; Exit</string>
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Exit</string>
          </property>
         </widget>
        </item>
