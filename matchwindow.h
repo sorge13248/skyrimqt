@@ -6,9 +6,11 @@
 #include <QStringListModel>
 #include "qtgame.h"
 #include "qtsupport.h"
-#include "mainwindow.h"
 #include "Item/weapon.h"
 #include "Item/shield.h"
+
+#include "mainwindow.h"
+#include "inventoryitem.h"
 
 namespace Ui {
 class MatchWindow;
@@ -19,14 +21,14 @@ class MatchWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit MatchWindow(QWidget *parent = 0, string playerName="New player");
+    explicit MatchWindow(QWidget *parent = 0, string playerName = "New player");
     ~MatchWindow();
+
+    void updateInventory();
 
 private slots:
     void on_dyamicButton_clicked();
-
-    void on_inventoryList_clicked(const QModelIndex &index);
-
+    void on_inventoryList_clicked(const QModelIndex&);
     void on_healButton_clicked();
 
 private:
@@ -37,8 +39,7 @@ private:
     void updatePlayerInfo();
     void nextTurn();
     void setEnemyVisibility(bool);
-    ushort getValueForHealth(ushort health, ushort maxHealth);
-    void updateInventory();
+    ushort getValueForHealth(ushort, ushort);
 };
 
 #endif // MATCHWINDOW_H

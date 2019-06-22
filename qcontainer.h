@@ -8,28 +8,30 @@ namespace FrancescoSorge {
     template<class T>
     class QContainer {
     private:
-        ushort count;
 
         class node {
         public:
             T info;
-            node *prev,*next;
+            node* prev;
+            node* next;
             explicit node(const T& t, node* p=0, node* n=0): info(t), prev(p), next(n) {}
-            ~node() {if(next) delete next;}
+            ~node() {
+                if(next) delete next;
+            }
         };
 
-        node *first, *last;
+        node* first;
+        node* last;
+        ushort count;
 
         static bool lexCompare(node* f1, node* f2) {
             if(!f2) return false;
             if(!f1) return true;
-            return f1->info < f2->info || (f1->info == f2->info && lexCompare(f1->next,f2->next));
+            return f1->info < f2->info || (f1->info == f2->info && lexCompare(f1->next, f2->next));
         }
 
     public:
-        explicit QContainer() : count(0) {
-
-        }
+        explicit QContainer() : first(0), last(0), count(0) { }
 
         QContainer(const QContainer& dl) {
             first = copy(dl.first, last);
@@ -111,7 +113,7 @@ namespace FrancescoSorge {
 
         T const getByIndex(ushort index) const {
             ushort i = 0;
-            for (constiterator it = begin(); it != end(); ++it) {
+            for (constiterator it = begin(); it != end(); ++it, ++i) {
                 if (i == index) {
                     return (*it);
                 }
@@ -132,6 +134,31 @@ namespace FrancescoSorge {
             return it.pt->info;
         }
 
+        bool remove(ushort index) {
+            ushort i = 0;
+            node* temp = first;
+            while (temp) {
+                if (i == index) {
+                    if(temp->prev) {
+                        (temp->prev)->next = temp->next;
+                    } else {
+                        first = temp->next;
+                    }
+                    if (temp->next) {
+                        (temp->next)->prev = temp->prev;
+                    } else {
+                        last = temp->prev;
+                    }
+                    count--;
+                    temp = nullptr;
+                    delete temp;
+                    return true;
+                }
+                temp = temp->next;
+                i++;
+            }
+            return false;
+        }
     };
 }
 

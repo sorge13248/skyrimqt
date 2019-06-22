@@ -18,3 +18,7 @@ void QtSupport::warning(const QString& message, const QString& title, ushort wid
     messageBox->warning(0, title, message);
     messageBox->setFixedSize(width, height);
 }
+
+QString QtSupport::input(QWidget* parent, QString title, QString content, QString placeholder) {
+    return QInputDialog::getText(parent, title, content, QLineEdit::Normal, placeholder);
+}

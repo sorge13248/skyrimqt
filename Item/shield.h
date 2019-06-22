@@ -9,13 +9,14 @@ namespace Skyrim {
     class Shield : public Item {
     private:
         ushort absorb;
-    public:
-        string const type = "Shield";
+        const static string type;
 
+    public:
         explicit Shield(string name, ushort level = 1, ushort absorb = 12);
         ~Shield() = default;
 
         ushort getAbsorb() const;
+        virtual string getType() const;
     };
 }
 

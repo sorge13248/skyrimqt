@@ -40,35 +40,31 @@ Skyrim::Item* Skyrim::Player::addToInventory(Item* item) {
 void Skyrim::Player::addHealPotion(ushort potion) {
     healPotion += potion;
 
-    if (healPotion > MAX_HEAL_POTION * level) {
-        cout << "You're carrying the max amount of healing potion (" << (MAX_HEAL_POTION * level) << ")"
-             << endl;
-        healPotion = MAX_HEAL_POTION * level;
+    if (healPotion > getMaxHealPotion()) {
+        healPotion = getMaxHealPotion();
     }
 }
 
-bool Skyrim::Player::equipItem(Item* item) {
+bool Skyrim::Player::equipItem(Item* item, bool fake) {
     bool isTheSame = false;
     if (Weapon* wp = dynamic_cast<Weapon*>(item)) {
         if (wp == weapon) {
             isTheSame = true;
         } else {
-            if (weapon) delete weapon;
-            weapon = wp;
+            if(!fake) weapon = wp;
         }
     } else if (Shield* sh = dynamic_cast<Shield*>(item)) {
         if (sh == shield) {
             isTheSame = true;
         } else {
-            if (shield) delete shield;
-            shield = sh;
+            if(!fake) shield = sh;
         }
     }
     return !isTheSame;
 }
 
-void Skyrim::Player::dropItem(Item* item) {
-
+bool Skyrim::Player::removeFromInventory(ushort index) {
+    return inventory->remove(index);
 }
 
 ushort Skyrim::Player::attack() const {
@@ -116,6 +112,10 @@ void Skyrim::Player::heals() {
 
 ushort Skyrim::Player::getExperience() const {
     return experience;
+}
+
+ushort Skyrim::Player::getMaxHealPotion() const {
+    return MAX_HEAL_POTION * level;
 }
 
 ushort Skyrim::Player::MAX_HEALTH = 100;

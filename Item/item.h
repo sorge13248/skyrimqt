@@ -4,10 +4,8 @@
 #include "../core.h"
 
 namespace Skyrim {
-// ITEMS
     class Item {
     protected:
-        // QUALITY
         enum Quality {
             Normal = 1,
             NotCommon = 2,
@@ -18,18 +16,20 @@ namespace Skyrim {
         string name;
         ushort level;
         Quality quality;
+        const static string type;
 
     public:
-        const string type;
-
         explicit Item(string, ushort);
         virtual ~Item() = default;
 
         string getName() const;
-
         ushort getLevel() const;
-
         Quality getQuality() const;
+        virtual string getType() const = 0;
+
+        void setName(string);
+
+        bool operator==(const Item&) const;
     };
 }
 

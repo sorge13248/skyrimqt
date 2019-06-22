@@ -15,7 +15,7 @@ namespace Skyrim {
         ushort damage;
         const ushort MAX_HEALTH;
     public:
-        explicit Enemy(string name, ushort level = 1, ushort health = 100, ushort damage = 1);
+        explicit Enemy(string, ushort level = 1, ushort health = 100, ushort damage = 1);
         virtual ~Enemy() = default;
 
         virtual ushort attack();

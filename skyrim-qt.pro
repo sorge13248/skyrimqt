@@ -40,7 +40,8 @@ SOURCES += \
     Item/item.cpp \
     Item/shield.cpp \
     matchwindow.cpp \
-    qtsupport.cpp
+    qtsupport.cpp \
+    inventoryitem.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -60,11 +61,13 @@ HEADERS += \
     Item/item.h \
     Item/shield.h \
     matchwindow.h \
-    qtsupport.h
+    qtsupport.h \
+    inventoryitem.h
 
 FORMS += \
         mainwindow.ui \
-    matchwindow.ui
+    matchwindow.ui \
+    inventoryitem.ui
 
 RESOURCES += \
     image.qrc

@@ -1,7 +1,7 @@
 #include "Enemy/enemy.h"
 
 Skyrim::Enemy::Enemy(string name, ushort level, ushort health, ushort damage)
-: name(name), level(level == 0 ? 1 : level), health(health * level), damage(damage), MAX_HEALTH(health * level) {}
+: name(name), health(health * level), level(level == 0 ? 1 : level), damage(damage), MAX_HEALTH(health * level) {}
 
 ushort Skyrim::Enemy::attack() {
     return FrancescoSorge::Basic::random(2, 6) * level;
@@ -20,8 +20,6 @@ ushort Skyrim::Enemy::getLevel() const {
 }
 
 bool Skyrim::Enemy::getsAttacked(ushort damage) {
-    ushort currentHealth = health;
-
     if (health - damage <= 0) {
         return true;
     } else {

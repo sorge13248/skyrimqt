@@ -22,14 +22,12 @@ void MainWindow::on_exitButton_clicked()
 
 void MainWindow::on_newGameButton_clicked()
 {
-    QString playerName = QInputDialog::getText(this, tr("New game - Skyrim"),
-                                             tr("Player name:"), QLineEdit::Normal,
-                                             "");
+    QString playerName = QtSupport::input(this, "New game - Skyrim", "Player name:");
     if (playerName.isEmpty()) {
         QtSupport::error("Player name is mandatory!");
     } else {
-        Console::printQ(playerName);
         MatchWindow* game = new MatchWindow(nullptr, playerName.toStdString());
+        game->setWindowModality(Qt::WindowModal);
         game->show();
         this->close();
     }

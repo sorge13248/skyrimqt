@@ -39,21 +39,16 @@ namespace Skyrim {
         ushort getMaxInventory() const;
         ushort getMaxHealth() const;
         ushort getExperience() const;
-
-        Item* addToInventory(Item*);
-
-        void addHealPotion(ushort);
-
-        bool equipItem(Item*);
-
-        void dropItem(Item*);
+        ushort getMaxHealPotion() const;
 
         ushort attack() const;
 
+        Item* addToInventory(Item*);
+        bool removeFromInventory(ushort);
+        void addHealPotion(ushort);
+        bool equipItem(Item*, bool f=false);
         bool getsAttacked(ushort);
-
         void gainExperience(ushort);
-
         void heals();
     };
 

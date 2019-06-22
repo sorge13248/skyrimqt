@@ -1,7 +1,7 @@
 #include "matchwindow.h"
 #include "ui_matchwindow.h"
 
-MatchWindow::MatchWindow(QWidget *parent, string playerName) :
+MatchWindow::MatchWindow(QWidget *parent, const string playerName) :
     QWidget(parent),
     ui(new Ui::MatchWindow),
     game(new Skyrim::QtGame())
@@ -12,6 +12,7 @@ MatchWindow::MatchWindow(QWidget *parent, string playerName) :
     this->move(screen.center() - this->rect().center());
 
     game->newGame(playerName);
+    setWindowTitle(QString::fromStdString(playerName + " - Skyrim"));
 
     try {
         game->startMatch();
@@ -79,10 +80,12 @@ void MatchWindow::updateInventory() {
 
     QStringList list;
     for (FrancescoSorge::QContainer<Skyrim::Item*>::constiterator it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
+        //bool isEquipped = !(game->getPlayer()->equipItem(*it, true));
         list << QString::fromStdString((*it)->getName() + " (Level " + std::to_string((*it)->getLevel()) + ")");
     }
 
     model->setStringList(list);
+    model->setData(model->index(0,0), QPixmap(":/icons/images/tick.png"), Qt::DecorationRole);
     ui->inventoryList->setModel(model);
 }
 
@@ -114,6 +117,20 @@ void MatchWindow::on_dyamicButton_clicked() {
     if (game->isEnemySpawned()) {
         if (game->getEnemy()->getsAttacked(game->getPlayer()->attack())) {
             game->enemyDie();
+
+            ushort rand = FrancescoSorge::Basic::random(1, 3);
+            if (rand == 1 || rand == 2) {
+                Skyrim::Item* item;
+                if (FrancescoSorge::Basic::random(1, 2) == 1) {
+                    item = new Skyrim::Weapon("God Slayer", 10, 20);
+                } else {
+                    item = new Skyrim::Shield("God S.H.I.E.L.D.", 10, 20);
+                }
+                if (game->getPlayer()->addToInventory(item) == nullptr) {
+                    QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
+                }
+                updateInventory();
+            }
         } else {
             if (game->getPlayer()->getsAttacked(game->getEnemy()->attack())) {
                 QtSupport::info("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
@@ -130,6 +147,15 @@ void MatchWindow::on_dyamicButton_clicked() {
 void MatchWindow::on_inventoryList_clicked(const QModelIndex &index)
 {
     ushort row = index.row();
+    Skyrim::Item* item = game->getPlayer()->getInventory()->getByIndex(row);
+    if (item) {
+        InventoryItem* inventoryWindow = new InventoryItem(game, item, row, this);
+        inventoryWindow->setWindowModality(Qt::WindowModal);
+        inventoryWindow->exec();
+        updateInventory();
+    } else {
+        QtSupport::error("Something went wrong and I cannot find the item you're looking for.");
+    }
 }
 
 void MatchWindow::on_healButton_clicked()

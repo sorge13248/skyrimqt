@@ -15,3 +15,7 @@ ushort Skyrim::Item::getLevel() const {
 Skyrim::Item::Quality Skyrim::Item::getQuality() const {
     return quality;
 }
+
+void Skyrim::Item::setName(string name) {
+    this->name = name;
+}

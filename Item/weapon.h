@@ -6,18 +6,17 @@
 
 namespace Skyrim {
 
-    class Weapon : public Skyrim::Item {
+    class Weapon : public Item {
     private:
         ushort damage;
-    public:
-        string const type = "Weapon";
+        const static string type;
 
+    public:
         explicit Weapon(string name, ushort level = 1, ushort damage = 15);
         ~Weapon() = default;
 
         ushort getDamage() const;
-
-
+        virtual string getType() const;
     };
 }
 
