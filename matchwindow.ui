@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>742</width>
+    <width>844</width>
     <height>438</height>
    </rect>
   </property>
@@ -616,7 +616,7 @@
         </spacer>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
+        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
          <item>
           <widget class="QLabel" name="inventoryLabel">
            <property name="text">
@@ -642,6 +642,24 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="placeholderText">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="cleanButton">
+             <property name="text">
+              <string>Clean</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

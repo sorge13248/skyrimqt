@@ -116,7 +116,7 @@ ushort MatchWindow::getValueForHealth(ushort health, ushort maxHealth) {
     return health * 100 / maxHealth;
 }
 
-void MatchWindow::updateInventory() {
+void MatchWindow::updateInventory(const QString& text) {
     editedFromLastSave = true;
 
     ui->inventoryLabel->setText("Inventory (" + QString::number(game->getPlayer()->getInventory()->getCount()) + "/" + QString::number(game->getPlayer()->getMaxInventory()) + "):");
@@ -124,9 +124,12 @@ void MatchWindow::updateInventory() {
     QStringListModel* model = new QStringListModel(this);
 
     QStringList list;
+    cout << "+++++++++++++++++++++++++++" << endl;
     for (FrancescoSorge::QContainer<Skyrim::Item*>::constiterator it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
         //bool isEquipped = !(game->getPlayer()->equipItem(*it, true));
-        list << QString::fromStdString((*it)->getName() + " (Level " + std::to_string((*it)->getLevel()) + ")");
+        if (text.isEmpty() || ((!text.isEmpty() && QString::fromStdString((*it)->getName()).contains(text, Qt::CaseInsensitive)) || (!text.isEmpty() && QString::fromStdString("Level " + std::to_string((*it)->getLevel())).contains(text, Qt::CaseInsensitive)))) {
+            list << QString::fromStdString((*it)->getName() + " (Level " + std::to_string((*it)->getLevel()) + ")");
+        }
     }
 
     model->setStringList(list);
@@ -285,4 +288,29 @@ void MatchWindow::on_saveButton_clicked()
     QJsonObject object = QJsonObject::fromVariantMap(map);
 
     QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".gamesave", object);
+}
+
+void MatchWindow::on_lineEdit_textChanged(const QString &text)
+{
+    if (text.isEmpty()) {
+        updateInventory();
+    } else {
+        updateInventory(text);
+    }
+}
+
+void MatchWindow::on_cleanButton_clicked()
+{
+    if (QtSupport::dialog("Clean inventory", "This action will remove every item below your level (except those equipped). Would you like to continue?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+
+        ushort index = 0;
+        for (auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
+            if (game->getPlayer()->equipItem(*it, false) && (*it)->getLevel() < game->getPlayer()->getLevel()) {
+                editedFromLastSave = true;
+                game->getPlayer()->getInventory()->remove(index);
+            }
+            index++;
+        }
+        if (editedFromLastSave) updateInventory(ui->lineEdit->text());
+    }
 }

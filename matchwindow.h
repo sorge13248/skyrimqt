@@ -30,10 +30,11 @@ private slots:
     void on_dyamicButton_clicked();
     void on_inventoryList_clicked(const QModelIndex&);
     void on_healButton_clicked();
-
     void on_exitButton_clicked();
-
     void on_saveButton_clicked();
+    void on_lineEdit_textChanged(const QString &);
+
+    void on_cleanButton_clicked();
 
 private:
     Ui::MatchWindow *ui;
@@ -46,7 +47,7 @@ private:
     void nextTurn();
     void setEnemyVisibility(bool);
     ushort getValueForHealth(ushort, ushort);
-    void updateInventory();
+    void updateInventory(const QString& s="");
     void showMainWindow();
 };
 
