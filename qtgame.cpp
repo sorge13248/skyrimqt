@@ -19,8 +19,9 @@ bool Skyrim::QtGame::newGame(string playerName) {
     return true;
 }
 
-void Skyrim::QtGame::loadGame() {
-
+bool Skyrim::QtGame::loadGame(string name, ushort health, ushort experience, ushort level, ushort healPotion) {
+    player = new Player(name, health, experience, level, healPotion);
+    return true;
 }
 
 bool Skyrim::QtGame::startMatch() {

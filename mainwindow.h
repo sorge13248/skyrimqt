@@ -8,6 +8,7 @@
 #include "console.h"
 #include "qtgame.h"
 #include "matchwindow.h"
+#include "loadgamewindow.h"
 
 namespace Ui {
 class MainWindow;

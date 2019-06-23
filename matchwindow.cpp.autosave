@@ -26,7 +26,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MatchWindow),
     game(new Skyrim::QtGame()),
-    editedFromLastSave(true)
+    editedFromLastSave(false)
 {
     QVariantMap map = json.object().toVariantMap();
 
@@ -42,11 +42,13 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     for (auto it = inventory.constBegin(); it != inventory.constEnd(); ++it) {
         Skyrim::Item* item = nullptr;
         auto itemMap = it.value().toMap();
+        
         if (itemMap.value("type") == "Weapon") {
             item = new Skyrim::Weapon(itemMap.value("name").toString().toStdString(), itemMap.value("level").toUInt(), itemMap.value("points").toUInt());
         } else if (itemMap.value("type") == "Shield") {
             item = new Skyrim::Shield(itemMap.value("name").toString().toStdString(), itemMap.value("level").toUInt(), itemMap.value("points").toUInt());
         }
+        
         if(itemMap.value("equipped").toBool()) game->getPlayer()->equipItem(item);
         game->getPlayer()->addToInventory(item);
     }
@@ -244,6 +246,8 @@ void MatchWindow::showMainWindow() {
 
 void MatchWindow::on_saveButton_clicked()
 {
+    editedFromLastSave = false;
+    
     QVariantMap map;
     map.insert("name", QString::fromStdString(game->getPlayer()->getName()));
     map.insert("level", game->getPlayer()->getLevel());

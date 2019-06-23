@@ -46,7 +46,6 @@ void QtSupport::saveJson(QString fileName, QJsonObject object) {
     jsonFile.write(document.toJson());
 }
 
-QStringList QtSupport::listFiles(QDir directory, QStringList filter) {
-    //assume the directory exists and contains some files and you want all jpg and JPG files
+QStringList QtSupport::getFiles(QDir directory, QStringList filter) {
     return directory.entryList(filter, QDir::Files);
 }

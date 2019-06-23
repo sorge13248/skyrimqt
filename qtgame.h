@@ -31,7 +31,7 @@ namespace Skyrim {
         void setEnemy(Enemy* const);
 
         bool newGame(string);
-        void loadGame();
+        bool loadGame(string, ushort, ushort, ushort, ushort);
         bool startMatch();
         bool playerEquipItem(Item* const);
         void enemyDie();

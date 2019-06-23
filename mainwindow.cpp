@@ -26,7 +26,7 @@ void MainWindow::on_newGameButton_clicked()
     if (playerName.isEmpty()) {
         QtSupport::error("Player name is mandatory!");
     } else {
-        MatchWindow* game = new MatchWindow(nullptr, playerName.toStdString());
+        MatchWindow* game = new MatchWindow(playerName.toStdString());
         game->setWindowModality(Qt::WindowModal);
         game->show();
         this->close();
@@ -35,7 +35,17 @@ void MainWindow::on_newGameButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    foreach(QString filename, QtSupport::listFiles(QDir("."), QStringList() << "*.json" << "*.JSON")) {
-        Console::printQ(filename);
+    bool atLeastOne = false;
+    foreach(QString filename, QtSupport::getFiles(QDir("."), QStringList() << "*.gamesave" << "*.GAMESAVE")) {
+        atLeastOne = true;
+        break;
+    }
+
+    if (!atLeastOne) {
+        QtSupport::warning("No savegame file found. Files must be in format JSON, with extension .gamesave and they need to be in the same directory as the game.");
+    } else {
+        LoadGameWindow* loadGameWindow = new LoadGameWindow(nullptr);
+        loadGameWindow->show();
+        this->close();
     }
 }

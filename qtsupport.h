@@ -20,7 +20,7 @@ public:
     static int dialog(QString, QString, QMessageBox::StandardButtons, QMessageBox::StandardButton);
     static QJsonDocument loadJson(QString);
     static void saveJson(QString, QJsonObject);
-    static QStringList listFiles(QDir, QStringList);
+    static QStringList getFiles(QDir, QStringList);
 };
 
 #endif // QTSUPPORT_H

@@ -22,7 +22,8 @@ class MatchWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit MatchWindow(QWidget *parent = 0, string playerName = "New player");
+    explicit MatchWindow(string, QWidget *parent = 0);
+    explicit MatchWindow(QJsonDocument, QWidget *parent = 0);
     ~MatchWindow();
 
 private slots:
@@ -39,6 +40,7 @@ private:
     Skyrim::QtGame* game;
     bool editedFromLastSave;
 
+    void initialize();
     void generateEnemy();
     void updatePlayerInfo();
     void nextTurn();
