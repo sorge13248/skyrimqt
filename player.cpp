@@ -92,6 +92,8 @@ void Skyrim::Player::gainExperience(ushort xp) {
 
     if (experience >= 30 * level) { // level up
         level++;
+        health += 100;
+        if (health > getMaxHealth()) health = getMaxHealth();
     }
 }
 

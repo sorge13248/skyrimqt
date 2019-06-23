@@ -15,9 +15,6 @@ Skyrim::Enemy* Skyrim::QtGame::getEnemy() const {
 }
 
 bool Skyrim::QtGame::newGame(string playerName) {
-    if (player != nullptr) {
-        delete player;
-    }
     player = new Player(playerName);
     return true;
 }

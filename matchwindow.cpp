@@ -124,17 +124,28 @@ void MatchWindow::on_dyamicButton_clicked() {
             game->enemyDie();
 
             ushort rand = FrancescoSorge::Basic::random(1, 3);
-            if (rand == 1 || rand == 2) {
+            if (rand == 1) {
                 Skyrim::Item* item;
                 if (FrancescoSorge::Basic::random(1, 2) == 1) {
-                    item = new Skyrim::Weapon("God Slayer", 10, 20);
+                    item = new Skyrim::Weapon("God Slayer", FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 50));
                 } else {
-                    item = new Skyrim::Shield("God S.H.I.E.L.D.", 10, 20);
+                    item = new Skyrim::Shield("God S.H.I.E.L.D.", FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 30));
                 }
-                if (game->getPlayer()->addToInventory(item) == nullptr) {
-                    QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
+
+                string damageAbsorb = "";
+                if (auto q = dynamic_cast<Skyrim::Weapon*>(item)) {
+                    damageAbsorb = "Damage: " + std::to_string(q->getDamage()) + " points";
+                } else if (auto q = dynamic_cast<Skyrim::Shield*>(item)) {
+                    damageAbsorb = "Absorb: " + std::to_string(q->getAbsorb()) + " points";
                 }
-                updateInventory();
+
+                if (QtSupport::dialog("Item dropped by enemy", QString::fromStdString(item->getName() + " (Level " + std::to_string(item->getLevel()) + ")\nType: " + item->getType() + "\n" + damageAbsorb) + "\n\nWould you like to keep it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
+                    if (game->getPlayer()->addToInventory(item) == nullptr) {
+                        QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
+                    } else {
+                        updateInventory();
+                    }
+                }
             }
         } else {
             if (game->getPlayer()->getsAttacked(game->getEnemy()->attack())) {
@@ -212,6 +223,22 @@ void MatchWindow::on_saveButton_clicked()
 
         map.insert("enemy", enemy);
     }
+    QVariantMap inventory;
+    ushort i = 0;
+    for(auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
+        QVariantMap item;
+        item.insert("name", QString::fromStdString((*it)->getName()));
+        item.insert("type", QString::fromStdString((*it)->getType()));
+        item.insert("level", (*it)->getLevel());
+        if (auto q = dynamic_cast<Skyrim::Weapon*>(*it)) {
+            item.insert("points", q->getDamage());
+        } else if (auto q = dynamic_cast<Skyrim::Shield*>(*it)) {
+            item.insert("points", q->getAbsorb());
+        }
+        item.insert("equipped", !(game->getPlayer()->equipItem(*it, true)));
+        inventory.insert(QString::number(i++), item);
+    }
+    map.insert("inventory", inventory);
     QJsonObject object = QJsonObject::fromVariantMap(map);
 
     QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".json", object);
