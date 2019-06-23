@@ -19,6 +19,10 @@ ushort Skyrim::Enemy::getLevel() const {
     return level;
 }
 
+void Skyrim::Enemy::setHealth(ushort h) {
+    health = h;
+}
+
 bool Skyrim::Enemy::getsAttacked(ushort damage) {
     if (health - damage <= 0) {
         return true;

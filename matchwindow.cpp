@@ -26,7 +26,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MatchWindow),
     game(new Skyrim::QtGame()),
-    editedFromLastSave(true)
+    editedFromLastSave(false)
 {
     QVariantMap map = json.object().toVariantMap();
 
@@ -35,18 +35,22 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
 
     if (map.contains("enemy")) {
         auto enemy = map.value("enemy").toMap();
-        game->setEnemy(new Skyrim::Enemy(enemy.value("name").toString().toStdString(), enemy.value("level").toUInt(), enemy.value("health").toUInt(), enemy.value("damage").toUInt()));
+        game->setEnemy(new Skyrim::Enemy(enemy.value("name").toString().toStdString(), enemy.value("level").toUInt(), enemy.value("maxHealth").toUInt(), enemy.value("damage").toUInt()));
+        game->getEnemy()->setHealth(enemy.value("health").toUInt());
+        generateEnemy();
     }
 
     auto inventory = map.value("inventory").toMap();
     for (auto it = inventory.constBegin(); it != inventory.constEnd(); ++it) {
         Skyrim::Item* item = nullptr;
         auto itemMap = it.value().toMap();
+
         if (itemMap.value("type") == "Weapon") {
             item = new Skyrim::Weapon(itemMap.value("name").toString().toStdString(), itemMap.value("level").toUInt(), itemMap.value("points").toUInt());
         } else if (itemMap.value("type") == "Shield") {
             item = new Skyrim::Shield(itemMap.value("name").toString().toStdString(), itemMap.value("level").toUInt(), itemMap.value("points").toUInt());
         }
+
         if(itemMap.value("equipped").toBool()) game->getPlayer()->equipItem(item);
         game->getPlayer()->addToInventory(item);
     }
@@ -92,13 +96,13 @@ void MatchWindow::generateEnemy() {
         }
 
         game->setEnemy(enemy);
+    }
 
-        if (game->isEnemySpawned()) {
-            ui->dyamicButton->setText("Attack!");
-            setEnemyVisibility(true);
-        } else {
-            ui->dyamicButton->setText("Move on");
-        }
+    if (game->isEnemySpawned()) {
+        ui->dyamicButton->setText("Attack!");
+        setEnemyVisibility(true);
+    } else {
+        ui->dyamicButton->setText("Move on");
     }
 }
 
@@ -244,6 +248,8 @@ void MatchWindow::showMainWindow() {
 
 void MatchWindow::on_saveButton_clicked()
 {
+    editedFromLastSave = false;
+
     QVariantMap map;
     map.insert("name", QString::fromStdString(game->getPlayer()->getName()));
     map.insert("level", game->getPlayer()->getLevel());
@@ -255,6 +261,7 @@ void MatchWindow::on_saveButton_clicked()
         enemy.insert("name", QString::fromStdString(game->getEnemy()->getName()));
         enemy.insert("level", game->getEnemy()->getLevel());
         enemy.insert("health", game->getEnemy()->getHealth());
+        enemy.insert("maxHealth", game->getEnemy()->getMaxHealth() / game->getEnemy()->getLevel());
         enemy.insert("damage", game->getEnemy()->getDamage());
 
         map.insert("enemy", enemy);
@@ -277,5 +284,5 @@ void MatchWindow::on_saveButton_clicked()
     map.insert("inventory", inventory);
     QJsonObject object = QJsonObject::fromVariantMap(map);
 
-    QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".json", object);
+    QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".gamesave", object);
 }

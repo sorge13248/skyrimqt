@@ -26,6 +26,7 @@ namespace Skyrim {
         bool getsAttacked(ushort);
         ushort getMaxHealth() const;
         ushort getDamage() const;
+        void setHealth(ushort);
     };
 }
 
