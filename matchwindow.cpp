@@ -145,7 +145,15 @@ void MatchWindow::updatePlayerInfo() {
 
 void MatchWindow::nextScene() {
     this->scene = game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size() - 1));
-    ui->sceneLabel->setPixmap(QPixmap(this->scene));
+
+    QPixmap *pixmap = new QPixmap(600, 300);
+    pixmap->fill(Qt::transparent);
+    QPainter *painter = new QPainter(pixmap);
+    painter->drawPixmap(0, 0, 600, 300, QPixmap(this->scene));
+    if (game->isEnemySpawned()) painter->drawPixmap(300, 230, 100, 50, QPixmap(QString::fromStdString(game->getEnemy()->getImage())));
+    painter->end();
+
+    ui->sceneLabel->setPixmap(*pixmap);
 }
 
 void MatchWindow::nextTurn() {

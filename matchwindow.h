@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QStringListModel>
 #include <QJsonObject>
+#include <QPainter>
 #include "qtgame.h"
 #include "qtsupport.h"
 #include "Item/weapon.h"

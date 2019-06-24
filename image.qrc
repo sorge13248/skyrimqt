@@ -10,4 +10,10 @@
         <file>images/logo.png</file>
         <file>images/icon.png</file>
     </qresource>
+    <qresource prefix="/enemies">
+        <file>images/animal.png</file>
+        <file>images/bandit.png</file>
+        <file>images/bandit-boss.png</file>
+        <file>images/ghost.png</file>
+    </qresource>
 </RCC>
