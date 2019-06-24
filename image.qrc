@@ -12,8 +12,8 @@
     </qresource>
     <qresource prefix="/enemies">
         <file>images/animal.png</file>
-        <file>images/bandit.png</file>
-        <file>images/bandit-boss.png</file>
         <file>images/ghost.png</file>
+        <file>images/raider.png</file>
+        <file>images/raider-boss.png</file>
     </qresource>
 </RCC>
