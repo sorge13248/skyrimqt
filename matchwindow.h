@@ -50,7 +50,7 @@ private:
     ushort getValueForHealth(ushort, ushort);
     void updateInventory(const QString& s="");
     void showMainWindow();
-    void nextScene();
+    void nextScene(string s="");
 };
 
 #endif // MATCHWINDOW_H

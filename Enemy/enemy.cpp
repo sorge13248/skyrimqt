@@ -39,3 +39,7 @@ bool Skyrim::Enemy::getsAttacked(ushort damage) {
 ushort Skyrim::Enemy::getMaxHealth() const {
     return MAX_HEALTH;
 }
+
+void Skyrim::Enemy::setMaxHealth(ushort health) {
+    MAX_HEALTH = health;
+}

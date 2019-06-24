@@ -58,7 +58,7 @@ bool Skyrim::QtGame::playerEquipItem(Item* const item) {
 }
 
 void Skyrim::QtGame::enemyDie() {
-    player->gainExperience(10 * enemy->getLevel());
+    player->gainExperience(2 * enemy->getLevel());
     player->addHealPotion(enemy->getLevel());
 
     if (enemy) delete enemy;

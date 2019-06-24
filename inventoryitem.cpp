@@ -31,6 +31,10 @@ InventoryItem::~InventoryItem()
 }
 
 void InventoryItem::setEquipped(bool b) {
+    if (game->getPlayer()->getLevel() < item->getLevel()) {
+        QtSupport::error("This gear is too much powerful for your character's level, perhaps you cheated?", "High level gear");
+        item->setLevel(game->getPlayer()->getLevel());
+    }
     if (b) game->getPlayer()->equipItem(item);
     ui->isEquipped->setVisible(b);
     ui->equipButton->setEnabled(!b);

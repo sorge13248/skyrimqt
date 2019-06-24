@@ -31,12 +31,25 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     QVariantMap map = json.object().toVariantMap();
 
     game->loadGame(map.value("name").toString().toStdString(), map.value("health").toUInt(), map.value("experience").toUInt(), map.value("level").toUInt(), map.value("healPotion").toUInt());
-    scene = map.value("scene").toString();
     initialize();
 
     if (map.contains("enemy")) {
         auto enemy = map.value("enemy").toMap();
-        game->setEnemy(new Skyrim::Enemy(enemy.value("name").toString().toStdString(), enemy.value("level").toUInt(), enemy.value("maxHealth").toUInt()));
+        string enemyType = enemy.value("name").toString().toStdString();
+        Skyrim::Enemy* enemyPtr;
+
+        if (enemyType == "Raider [BOSS]") {
+            enemyPtr = new Skyrim::RaiderBoss(enemy.value("level").toUInt());
+        } else if (enemyType == "Raider") {
+            enemyPtr = new Skyrim::Raider(enemy.value("level").toUInt());
+        } else if (enemyType == "Ghost") {
+            enemyPtr = new Skyrim::Ghost(enemy.value("level").toUInt());
+        } else {
+            enemyPtr = new Skyrim::Animal(enemy.value("level").toUInt());
+        }
+
+        game->setEnemy(enemyPtr);
+        game->getEnemy()->setMaxHealth(enemy.value("maxHealth").toUInt());
         game->getEnemy()->setHealth(enemy.value("health").toUInt());
         generateEnemy();
     }
@@ -57,6 +70,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     }
 
     nextTurn();
+    nextScene(map.value("scene").toString().toStdString());
 }
 
 void MatchWindow::initialize() {
@@ -143,19 +157,19 @@ void MatchWindow::updatePlayerInfo() {
     ui->healButton->setText("Use healing potion (" + QString::number(game->getPlayer()->getHealPotion()) + ")");
 }
 
-void MatchWindow::nextScene() {
-    this->scene = game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size() - 1));
-
+void MatchWindow::nextScene(string scene) {
+    QString selectedScene = scene.empty() ? game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size() - 1)) : QString::fromStdString(scene);
     QPixmap *pixmap = new QPixmap(600, 300);
     pixmap->fill(Qt::transparent);
     QPainter *painter = new QPainter(pixmap);
-    painter->drawPixmap(0, 0, 600, 300, QPixmap(this->scene));
+    painter->drawPixmap(0, 0, 600, 300, QPixmap(selectedScene));
     if (game->isEnemySpawned()) {
-        painter->drawPixmap(350, 120, 210, 160, QPixmap(QString::fromStdString(game->getEnemy()->getImage())));
+        painter->drawPixmap(350, 120, 220, 160, QPixmap(QString::fromStdString(game->getEnemy()->getImage())));
     }
     painter->end();
 
     ui->sceneLabel->setPixmap(*pixmap);
+    this->scene = selectedScene;
     delete painter;
 }
 

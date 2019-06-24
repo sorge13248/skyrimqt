@@ -13,7 +13,7 @@ namespace Skyrim {
         ushort health;
         ushort level;
         ushort damage;
-        const ushort MAX_HEALTH;
+        ushort MAX_HEALTH;
         const string image;
     public:
         explicit Enemy(string, ushort level = 1, ushort health = 100, string image = ":/icons/images/logo.png");
@@ -29,6 +29,7 @@ namespace Skyrim {
 
         bool getsAttacked(ushort);
         void setHealth(ushort);
+        void setMaxHealth(ushort);
     };
 }
 
