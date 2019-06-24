@@ -124,9 +124,7 @@ void MatchWindow::updateInventory(const QString& text) {
     QStringListModel* model = new QStringListModel(this);
 
     QStringList list;
-    cout << "+++++++++++++++++++++++++++" << endl;
     for (FrancescoSorge::QContainer<Skyrim::Item*>::constiterator it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
-        //bool isEquipped = !(game->getPlayer()->equipItem(*it, true));
         if (text.isEmpty() || ((!text.isEmpty() && QString::fromStdString((*it)->getName()).contains(text, Qt::CaseInsensitive)) || (!text.isEmpty() && QString::fromStdString("Level " + std::to_string((*it)->getLevel())).contains(text, Qt::CaseInsensitive)))) {
             list << QString::fromStdString((*it)->getName() + " (Level " + std::to_string((*it)->getLevel()) + ")");
         }
@@ -145,12 +143,17 @@ void MatchWindow::updatePlayerInfo() {
     ui->healButton->setText("Use healing potion (" + QString::number(game->getPlayer()->getHealPotion()) + ")");
 }
 
+void MatchWindow::nextScene() {
+    ui->sceneLabel->setPixmap(QPixmap(scenes.at(FrancescoSorge::Basic::random(0, scenes.size()-1))));
+}
+
 void MatchWindow::nextTurn() {
     updatePlayerInfo();
 
     if (!game->isEnemySpawned()) {
         setEnemyVisibility(false);
         generateEnemy();
+        nextScene();
     }
     if (game->isEnemySpawned()) {
         ui->enemyName->setText(QString::fromStdString(game->getEnemy()->getName()) + " - Level " + QString::number(game->getEnemy()->getLevel()));
@@ -314,3 +317,5 @@ void MatchWindow::on_cleanButton_clicked()
         if (editedFromLastSave) updateInventory(ui->lineEdit->text());
     }
 }
+
+const QStringList MatchWindow::scenes = {QString::fromStdString(":/icons/images/logo.png"), QString::fromStdString(":/icons/images/tick.png"), QString::fromStdString(":/levels/images/1.jpeg")};

@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     const QRect screen = QApplication::desktop()->screenGeometry();
     this->move(screen.center() - this->rect().center());
+
+    QPixmap logo(":/icons/images/logo.png");
+    ui->logoLabel->setPixmap(logo);
 }
 
 MainWindow::~MainWindow()

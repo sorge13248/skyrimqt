@@ -40,6 +40,7 @@ private:
     Ui::MatchWindow *ui;
     Skyrim::QtGame* game;
     bool editedFromLastSave;
+    static const QStringList scenes;
 
     void initialize();
     void generateEnemy();
@@ -49,6 +50,7 @@ private:
     ushort getValueForHealth(ushort, ushort);
     void updateInventory(const QString& s="");
     void showMainWindow();
+    void nextScene();
 };
 
 #endif // MATCHWINDOW_H
