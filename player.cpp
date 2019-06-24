@@ -1,6 +1,6 @@
 #include "player.h"
 
-Skyrim::Player::Player(string name, ushort health, ushort experience, ushort level, ushort healPotion) : name(name), health(health), experience(experience), level(level == 0 ? 1 : level), healPotion(healPotion), inventory(new FrancescoSorge::QContainer<Item*>()), weapon(nullptr), shield(nullptr) {
+Skyrim::Player::Player(string name, ushort health, ushort experience, ushort level, ushort healPotion) : name(name), health(health), experience(experience), level(level == 0 ? 1 : level), healPotion(healPotion), weapon(nullptr), shield(nullptr), inventory(new FrancescoSorge::QContainer<Item*>()) {
 
 }
 

@@ -14,8 +14,9 @@ namespace Skyrim {
         ushort level;
         ushort damage;
         const ushort MAX_HEALTH;
+        const string image;
     public:
-        explicit Enemy(string, ushort level = 1, ushort health = 100, ushort damage = 1);
+        explicit Enemy(string, ushort level = 1, ushort health = 100, string image = ":/icons/images/logo.png");
         virtual ~Enemy() = default;
 
         virtual ushort attack();
@@ -23,9 +24,10 @@ namespace Skyrim {
         string getName() const;
         ushort getHealth() const;
         ushort getLevel() const;
-        bool getsAttacked(ushort);
         ushort getMaxHealth() const;
-        ushort getDamage() const;
+        string getImage() const;
+
+        bool getsAttacked(ushort);
         void setHealth(ushort);
     };
 }

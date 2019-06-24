@@ -35,7 +35,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
 
     if (map.contains("enemy")) {
         auto enemy = map.value("enemy").toMap();
-        game->setEnemy(new Skyrim::Enemy(enemy.value("name").toString().toStdString(), enemy.value("level").toUInt(), enemy.value("maxHealth").toUInt(), enemy.value("damage").toUInt()));
+        game->setEnemy(new Skyrim::Enemy(enemy.value("name").toString().toStdString(), enemy.value("level").toUInt(), enemy.value("maxHealth").toUInt()));
         game->getEnemy()->setHealth(enemy.value("health").toUInt());
         generateEnemy();
     }
@@ -267,7 +267,6 @@ void MatchWindow::on_saveButton_clicked()
         enemy.insert("level", game->getEnemy()->getLevel());
         enemy.insert("health", game->getEnemy()->getHealth());
         enemy.insert("maxHealth", game->getEnemy()->getMaxHealth() / game->getEnemy()->getLevel());
-        enemy.insert("damage", game->getEnemy()->getDamage());
 
         map.insert("enemy", enemy);
     }
@@ -307,18 +306,18 @@ void MatchWindow::on_cleanButton_clicked()
 {
     if (QtSupport::dialog("Clean inventory", "This action will remove every item below your level (except those equipped). Would you like to continue?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
 
-        ushort index = 0;
-        for (auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it, index++) {
-
-            std::cout << (*it)->getName() << std::endl;
-            std::cout << "The same? " << std::to_string(game->getPlayer()->equipItem(*it, true)) << std::endl;
-            std::cout << "Level? " << std::to_string((*it)->getLevel()) << std::endl;
-
-            if (game->getPlayer()->equipItem(*it, true) == 0 && (*it)->getLevel() < game->getPlayer()->getLevel()) {
-                editedFromLastSave = true;
-                game->getPlayer()->getInventory()->remove(index);
+            ushort index = 0;
+            QStringList indexesToRemove;
+            for (auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
+                if (game->getPlayer()->equipItem(*it, true) && (*it)->getLevel() < game->getPlayer()->getLevel()) {
+                    editedFromLastSave = true;
+                    indexesToRemove << QString::number(index);
+                }
+                index++;
             }
+            for (QString index : indexesToRemove) {
+                game->getPlayer()->getInventory()->remove(index.toUInt());
+            }
+            if (editedFromLastSave) updateInventory(ui->lineEdit->text());
         }
-        if (editedFromLastSave) updateInventory(ui->lineEdit->text());
-    }
 }
