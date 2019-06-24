@@ -23,13 +23,6 @@ namespace FrancescoSorge {
         node* first;
         node* last;
         ushort count;
-
-        static bool lexCompare(node* f1, node* f2) {
-            if(!f2) return false;
-            if(!f1) return true;
-            return f1->info < f2->info || (f1->info == f2->info && lexCompare(f1->next, f2->next));
-        }
-
     public:
         explicit QContainer() : first(0), last(0), count(0) { }
 
@@ -64,10 +57,6 @@ namespace FrancescoSorge {
 
         explicit QContainer(int k, const T& t): first(nullptr), last(nullptr) {
             for(int i=0; i<k; ++i) insertBack(t);
-        }
-
-        bool operator<(const QContainer& dl) const {
-            return lexCompare(first,dl.first);
         }
 
         ushort getCount() const {
@@ -130,10 +119,6 @@ namespace FrancescoSorge {
             return constiterator(last+1,true);
         }
 
-        T operator[](constiterator it) const {
-            return it.pt->info;
-        }
-
         bool remove(ushort index) {
             ushort i = 0;
             node* temp = first;
@@ -151,7 +136,6 @@ namespace FrancescoSorge {
                     }
                     count--;
                     temp = nullptr;
-                    delete temp;
                     return true;
                 }
                 temp = temp->next;

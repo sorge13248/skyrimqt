@@ -29,3 +29,10 @@ void LoadGameWindow::on_fileListView_clicked(const QModelIndex &index)
     match->show();
     this->close();
 }
+
+void LoadGameWindow::on_backButton_clicked()
+{
+    MainWindow* main = new MainWindow();
+    main->show();
+    this->close();
+}

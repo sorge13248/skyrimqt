@@ -131,7 +131,6 @@ void MatchWindow::updateInventory(const QString& text) {
     }
 
     model->setStringList(list);
-    model->setData(model->index(0,0), QPixmap(":/icons/images/tick.png"), Qt::DecorationRole);
     ui->inventoryList->setModel(model);
 }
 
@@ -144,7 +143,7 @@ void MatchWindow::updatePlayerInfo() {
 }
 
 void MatchWindow::nextScene() {
-    ui->sceneLabel->setPixmap(QPixmap(scenes.at(FrancescoSorge::Basic::random(0, scenes.size()-1))));
+    ui->sceneLabel->setPixmap(QPixmap(game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size()-1))));
 }
 
 void MatchWindow::nextTurn() {
@@ -173,9 +172,9 @@ void MatchWindow::on_dyamicButton_clicked() {
             if (rand == 1) {
                 Skyrim::Item* item;
                 if (FrancescoSorge::Basic::random(1, 2) == 1) {
-                    item = new Skyrim::Weapon("God Slayer", FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 50));
+                    item = new Skyrim::Weapon(game->weapons.at(FrancescoSorge::Basic::random(0, game->weapons.size()-1)).toStdString(), FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 50));
                 } else {
-                    item = new Skyrim::Shield("God S.H.I.E.L.D.", FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 30));
+                    item = new Skyrim::Shield(game->shields.at(FrancescoSorge::Basic::random(0, game->shields.size()-1)).toStdString(), FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel()), FrancescoSorge::Basic::random(5, 30));
                 }
 
                 string damageAbsorb = "";
@@ -275,17 +274,19 @@ void MatchWindow::on_saveButton_clicked()
     QVariantMap inventory;
     ushort i = 0;
     for(auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
-        QVariantMap item;
-        item.insert("name", QString::fromStdString((*it)->getName()));
-        item.insert("type", QString::fromStdString((*it)->getType()));
-        item.insert("level", (*it)->getLevel());
-        if (auto q = dynamic_cast<Skyrim::Weapon*>(*it)) {
-            item.insert("points", q->getDamage());
-        } else if (auto q = dynamic_cast<Skyrim::Shield*>(*it)) {
-            item.insert("points", q->getAbsorb());
+        if (*it != nullptr) {
+            QVariantMap item;
+            item.insert("name", QString::fromStdString((*it)->getName()));
+            item.insert("type", QString::fromStdString((*it)->getType()));
+            item.insert("level", (*it)->getLevel());
+            if (auto q = dynamic_cast<Skyrim::Weapon*>(*it)) {
+                item.insert("points", q->getDamage());
+            } else if (auto q = dynamic_cast<Skyrim::Shield*>(*it)) {
+                item.insert("points", q->getAbsorb());
+            }
+            item.insert("equipped", !(game->getPlayer()->equipItem(*it, true)));
+            inventory.insert(QString::number(i++), item);
         }
-        item.insert("equipped", !(game->getPlayer()->equipItem(*it, true)));
-        inventory.insert(QString::number(i++), item);
     }
     map.insert("inventory", inventory);
     QJsonObject object = QJsonObject::fromVariantMap(map);
@@ -307,15 +308,17 @@ void MatchWindow::on_cleanButton_clicked()
     if (QtSupport::dialog("Clean inventory", "This action will remove every item below your level (except those equipped). Would you like to continue?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
 
         ushort index = 0;
-        for (auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
-            if (game->getPlayer()->equipItem(*it, false) && (*it)->getLevel() < game->getPlayer()->getLevel()) {
+        for (auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it, index++) {
+
+            std::cout << (*it)->getName() << std::endl;
+            std::cout << "The same? " << std::to_string(game->getPlayer()->equipItem(*it, true)) << std::endl;
+            std::cout << "Level? " << std::to_string((*it)->getLevel()) << std::endl;
+
+            if (game->getPlayer()->equipItem(*it, true) == 0 && (*it)->getLevel() < game->getPlayer()->getLevel()) {
                 editedFromLastSave = true;
                 game->getPlayer()->getInventory()->remove(index);
             }
-            index++;
         }
         if (editedFromLastSave) updateInventory(ui->lineEdit->text());
     }
 }
-
-const QStringList MatchWindow::scenes = {QString::fromStdString(":/icons/images/logo.png"), QString::fromStdString(":/icons/images/tick.png"), QString::fromStdString(":/levels/images/1.jpeg")};

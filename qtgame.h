@@ -21,6 +21,10 @@ namespace Skyrim {
         Enemy* enemy;
 
     public:
+        static const QStringList scenes;
+        static const QStringList weapons;
+        static const QStringList shields;
+
         explicit QtGame();
 
         Player* getPlayer() const;
@@ -29,7 +33,6 @@ namespace Skyrim {
 
         bool setPlayer(Player* const);
         void setEnemy(Enemy* const);
-
         bool newGame(string);
         bool loadGame(string, ushort, ushort, ushort, ushort);
         bool startMatch();

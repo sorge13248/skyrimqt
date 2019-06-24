@@ -16,8 +16,6 @@ namespace Skyrim {
         ~Ghost() = default;
 
         virtual ushort attack();
-
-
     };
 }
 

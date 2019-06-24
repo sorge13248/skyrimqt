@@ -25,8 +25,8 @@ QString QtSupport::input(QWidget* parent, QString title, QString content, QStrin
 
 int QtSupport::dialog(QString title, QString content, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton button) {
     QMessageBox msgBox;
-    msgBox.setText(title);
-    msgBox.setInformativeText(content);
+    msgBox.setWindowTitle(title);
+    msgBox.setText(content);
     msgBox.setStandardButtons(buttons);
     msgBox.setDefaultButton(button);
     return msgBox.exec();

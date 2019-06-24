@@ -19,8 +19,8 @@ namespace Skyrim {
         ushort level;
         ushort healPotion;
 
-        Weapon *weapon = nullptr;
-        Shield *shield = nullptr;
+        Weapon *weapon;
+        Shield *shield;
         FrancescoSorge::QContainer<Item*>* inventory;
 
         static ushort MAX_HEAL_POTION;
@@ -40,7 +40,6 @@ namespace Skyrim {
         ushort getMaxHealth() const;
         ushort getExperience() const;
         ushort getMaxHealPotion() const;
-
         ushort attack() const;
 
         Item* addToInventory(Item*);

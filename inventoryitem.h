@@ -24,11 +24,8 @@ public:
 
 private slots:
     void on_equipButton_clicked();
-
     void on_dropButton_clicked();
-
     void on_renameButton_clicked();
-
     void on_closeButton_clicked();
 
 private:

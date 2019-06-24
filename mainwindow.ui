@@ -27,6 +27,31 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QLabel" name="logoLabel">
+      <property name="minimumSize">
+       <size>
+        <width>118</width>
+        <height>182</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>118</width>
+        <height>182</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-left: 20px</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
@@ -49,6 +74,16 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>A Francesco Sorge production</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer_2">
@@ -179,6 +214,24 @@
           </item>
           <item>
            <widget class="QCommandLinkButton" name="exitButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
              <string>Exit</string>
             </property>
@@ -215,31 +268,6 @@
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="logoLabel">
-      <property name="minimumSize">
-       <size>
-        <width>118</width>
-        <height>182</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>118</width>
-        <height>182</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">margin-left: 20px</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

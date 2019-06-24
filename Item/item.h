@@ -28,8 +28,6 @@ namespace Skyrim {
         virtual string getType() const = 0;
 
         void setName(string);
-
-        bool operator==(const Item&) const;
     };
 }
 

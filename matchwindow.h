@@ -32,15 +32,13 @@ private slots:
     void on_healButton_clicked();
     void on_exitButton_clicked();
     void on_saveButton_clicked();
-    void on_lineEdit_textChanged(const QString &);
-
+    void on_lineEdit_textChanged(const QString&);
     void on_cleanButton_clicked();
 
 private:
     Ui::MatchWindow *ui;
     Skyrim::QtGame* game;
     bool editedFromLastSave;
-    static const QStringList scenes;
 
     void initialize();
     void generateEnemy();

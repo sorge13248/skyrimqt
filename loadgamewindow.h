@@ -9,6 +9,7 @@
 #include "qtsupport.h"
 #include "console.h"
 
+#include "mainwindow.h"
 #include "matchwindow.h"
 
 namespace Ui {
@@ -24,7 +25,8 @@ public:
     ~LoadGameWindow();
 
 private slots:
-    void on_fileListView_clicked(const QModelIndex &index);
+    void on_fileListView_clicked(const QModelIndex&);
+    void on_backButton_clicked();
 
 private:
     Ui::LoadGameWindow *ui;
