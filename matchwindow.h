@@ -39,6 +39,7 @@ private:
     Ui::MatchWindow *ui;
     Skyrim::QtGame* game;
     bool editedFromLastSave;
+    QString scene;
 
     void initialize();
     void generateEnemy();

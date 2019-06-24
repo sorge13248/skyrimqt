@@ -31,6 +31,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
     QVariantMap map = json.object().toVariantMap();
 
     game->loadGame(map.value("name").toString().toStdString(), map.value("health").toUInt(), map.value("experience").toUInt(), map.value("level").toUInt(), map.value("healPotion").toUInt());
+    scene = map.value("scene").toString();
     initialize();
 
     if (map.contains("enemy")) {
@@ -143,7 +144,8 @@ void MatchWindow::updatePlayerInfo() {
 }
 
 void MatchWindow::nextScene() {
-    ui->sceneLabel->setPixmap(QPixmap(game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size()-1))));
+    this->scene = game->scenes.at(FrancescoSorge::Basic::random(0, game->scenes.size() - 1));
+    ui->sceneLabel->setPixmap(QPixmap(this->scene));
 }
 
 void MatchWindow::nextTurn() {
@@ -261,6 +263,7 @@ void MatchWindow::on_saveButton_clicked()
     map.insert("health", game->getPlayer()->getHealth());
     map.insert("experience", game->getPlayer()->getExperience());
     map.insert("healPotion", game->getPlayer()->getHealPotion());
+    map.insert("scene", this->scene);
     if (game->isEnemySpawned()) {
         QVariantMap enemy;
         enemy.insert("name", QString::fromStdString(game->getEnemy()->getName()));
