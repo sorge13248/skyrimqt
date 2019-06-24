@@ -65,7 +65,7 @@ void Skyrim::QtGame::enemyDie() {
     setEnemy(nullptr);
 }
 
-const QStringList Skyrim::QtGame::scenes = {QString::fromStdString(":/icons/images/logo.png"), QString::fromStdString(":/icons/images/tick.png"), QString::fromStdString(":/levels/images/1.jpeg")};
+const QStringList Skyrim::QtGame::scenes = {QString::fromStdString(":/levels/images/generic.jpg"), QString::fromStdString(":/levels/images/dwemer.jpg"), QString::fromStdString(":/levels/images/forest.jpg"), QString::fromStdString(":/levels/images/fort.jpg")};
 
 const QStringList Skyrim::QtGame::weapons = {QString::fromStdString("Iron Sword"), QString::fromStdString("Steel Sword"), QString::fromStdString("Diamond Sword"), QString::fromStdString("Daedra Sword"), QString::fromStdString("Sword of Blade's master"), QString::fromStdString("Bow"), QString::fromStdString("Wood Bow"), QString::fromStdString("Axe"), QString::fromStdString("Knife"), QString::fromStdString("Staff of fire"), QString::fromStdString("Staff of ice"), QString::fromStdString("Enchanted Sword")};
 

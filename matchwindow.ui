@@ -576,6 +576,9 @@
            <property name="text">
             <string/>
            </property>
+           <property name="pixmap">
+            <pixmap resource="image.qrc">:/levels/images/fort.jpg</pixmap>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>

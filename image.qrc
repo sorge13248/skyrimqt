@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/levels">
-        <file>images/1.jpeg</file>
+        <file>images/dwemer.jpg</file>
+        <file>images/forest.jpg</file>
+        <file>images/fort.jpg</file>
+        <file>images/generic.jpg</file>
     </qresource>
     <qresource prefix="/icons">
         <file>images/tick.png</file>
