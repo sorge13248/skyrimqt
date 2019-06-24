@@ -72,3 +72,5 @@ FORMS += \
 
 RESOURCES += \
     image.qrc
+
+QMAKE_CXXFLAGS += -std=c++11

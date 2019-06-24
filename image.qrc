@@ -21,5 +21,7 @@
         <file>images/bow.png</file>
         <file>images/staff.png</file>
         <file>images/sword.png</file>
+        <file>images/captain.png</file>
+        <file>images/zelda.png</file>
     </qresource>
 </RCC>

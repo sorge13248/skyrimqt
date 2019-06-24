@@ -40,6 +40,8 @@ namespace Skyrim {
         ushort getExperience() const;
         ushort getMaxHealPotion() const;
         ushort attack() const;
+        Weapon* getWeapon() const;
+        Shield* getShield() const;
 
         Item* addToInventory(Item*);
         bool removeFromInventory(ushort);

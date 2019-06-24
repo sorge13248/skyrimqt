@@ -9,6 +9,7 @@ namespace Skyrim {
         string name;
         ushort level;
         const static string type;
+        const static string image;
 
     public:
         explicit Item(string, ushort);
@@ -16,6 +17,7 @@ namespace Skyrim {
 
         string getName() const;
         ushort getLevel() const;
+        virtual string getImage() const = 0;
         virtual string getType() const = 0;
 
         void setName(string);

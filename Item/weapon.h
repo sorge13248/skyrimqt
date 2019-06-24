@@ -9,6 +9,7 @@ namespace Skyrim {
     private:
         ushort damage;
         const static string type;
+        const static string image;
 
     public:
         explicit Weapon(string name, ushort level = 1, ushort damage = 15);
@@ -16,6 +17,7 @@ namespace Skyrim {
 
         ushort getDamage() const;
         virtual string getType() const;
+        virtual string getImage() const;
     };
 }
 

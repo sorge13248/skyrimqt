@@ -11,7 +11,7 @@ MatchWindow::MatchWindow(const string playerName, QWidget *parent) :
     initialize();
 
     Skyrim::Weapon* sword = new Skyrim::Weapon("Iron Sword");
-    Skyrim::Shield* shield = new Skyrim::Shield("Wood Shield");
+    Skyrim::Shield* shield = new Skyrim::Shield("Iron Shield");
 
     game->playerEquipItem(sword);
     game->playerEquipItem(shield);
@@ -56,7 +56,7 @@ MatchWindow::MatchWindow(QJsonDocument json, QWidget *parent) :
 
     auto inventory = map.value("inventory").toMap();
     for (auto it = inventory.constBegin(); it != inventory.constEnd(); ++it) {
-        Skyrim::Item* item = nullptr;
+        Skyrim::Item* item = 0;
         auto itemMap = it.value().toMap();
 
         if (itemMap.value("type") == "Weapon") {
@@ -98,7 +98,7 @@ MatchWindow::~MatchWindow()
 void MatchWindow::generateEnemy() {
     if (!game->isEnemySpawned()) {
         ushort rand = FrancescoSorge::Basic::random(0, 15);
-        Skyrim::Enemy* enemy = nullptr;
+        Skyrim::Enemy* enemy = 0;
 
         if (rand >= 1 && rand <= 3) {
             enemy = new Skyrim::Raider(FrancescoSorge::Basic::random(1, game->getPlayer()->getLevel() + 1));
@@ -148,7 +148,8 @@ void MatchWindow::updateInventory(const QString& text) {
     model->setStringList(list);
     ui->inventoryList->setModel(model);
 
-    ui->weaponImage->setPixmap(QPixmap(":/items/images/sword.png"));
+    ui->weaponImage->setPixmap(QPixmap(QString::fromStdString(game->getPlayer()->getWeapon()->getImage())));
+    ui->shieldImage->setPixmap(QPixmap(QString::fromStdString(game->getPlayer()->getShield()->getImage())));
 }
 
 void MatchWindow::updatePlayerInfo() {
@@ -214,7 +215,7 @@ void MatchWindow::on_dyamicButton_clicked() {
                 }
 
                 if (FrancescoSorge::QtSupport::dialog("Item dropped by enemy", QString::fromStdString(item->getName() + " (Level " + std::to_string(item->getLevel()) + ")\nType: " + item->getType() + "\n" + damageAbsorb) + "\n\nWould you like to keep it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
-                    if (game->getPlayer()->addToInventory(item) == nullptr) {
+                    if (game->getPlayer()->addToInventory(item) == 0) {
                         FrancescoSorge::QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
                     } else {
                         updateInventory();
@@ -276,7 +277,7 @@ void MatchWindow::on_exitButton_clicked()
 }
 
 void MatchWindow::showMainWindow() {
-    MainWindow* main = new MainWindow(nullptr);
+    MainWindow* main = new MainWindow(0);
     main->show();
 }
 
@@ -303,7 +304,7 @@ void MatchWindow::on_saveButton_clicked()
     QVariantMap inventory;
     ushort i = 0;
     for(auto it = game->getPlayer()->getInventory()->begin(); it != game->getPlayer()->getInventory()->end(); ++it) {
-        if (*it != nullptr) {
+        if (*it != 0) {
             QVariantMap item;
             item.insert("name", QString::fromStdString((*it)->getName()));
             item.insert("type", QString::fromStdString((*it)->getType()));

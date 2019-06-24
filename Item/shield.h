@@ -9,6 +9,7 @@ namespace Skyrim {
     private:
         ushort absorb;
         const static string type;
+        const static string image;
 
     public:
         explicit Shield(string name, ushort level = 1, ushort absorb = 12);
@@ -16,6 +17,7 @@ namespace Skyrim {
 
         ushort getAbsorb() const;
         virtual string getType() const;
+        virtual string getImage() const;
     };
 }
 

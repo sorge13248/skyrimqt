@@ -71,6 +71,14 @@ ushort Skyrim::Player::attack() const {
     return (weapon->getDamage() * weapon->getLevel()) + level;
 }
 
+Skyrim::Weapon* Skyrim::Player::getWeapon() const {
+    return weapon;
+}
+
+Skyrim::Shield* Skyrim::Player::getShield() const {
+    return shield;
+}
+
 bool Skyrim::Player::getsAttacked(ushort damage) {
     if (damage - shield->getAbsorb() <= 0) {
         damage = 1;

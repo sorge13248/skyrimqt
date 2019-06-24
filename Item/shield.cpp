@@ -10,4 +10,9 @@ string Skyrim::Shield::getType() const {
     return type;
 }
 
+string Skyrim::Shield::getImage() const {
+   return image;
+}
+
 const string Skyrim::Shield::type = "Shield";
+const string Skyrim::Shield::image = ":/items/images/zelda.png";

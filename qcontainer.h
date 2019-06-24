@@ -41,20 +41,20 @@ namespace FrancescoSorge {
         ~QContainer() {if(first) delete first;}
 
         void insertFront(const T& t) {
-            first = new node(t,nullptr,first);
-            if(last == nullptr) {last = first;}
+            first = new node(t,0,first);
+            if(last == 0) {last = first;}
             else {(first->next)->prev = first;}
             count++;
         }
 
         void insertBack(const T& t) {
-            last = new node(t,last,nullptr);
-            if(first == nullptr) {first = last;}
+            last = new node(t,last,0);
+            if(first == 0) {first = last;}
             else {(last->prev)->next = last;}
             count++;
         }
 
-        explicit QContainer(int k, const T& t): first(nullptr), last(nullptr) {
+        explicit QContainer(int k, const T& t): first(0), last(0) {
             for(int i=0; i<k; ++i) insertBack(t);
         }
 
@@ -69,11 +69,11 @@ namespace FrancescoSorge {
             bool pte; // true if past-the-end
             explicit constiterator(node* p, bool b=false): pt(p), pte(b) {}
         public:
-            explicit constiterator(): pt(nullptr), pte(false) {}
+            explicit constiterator(): pt(0), pte(false) {}
 
             constiterator& operator++() {
                 if(!pte && pt) {
-                    if(pt->next == nullptr) {pt = pt+1; pte=true;}
+                    if(pt->next == 0) {pt = pt+1; pte=true;}
                     else pt = pt->next;
                 }
                 return *this;
@@ -106,7 +106,7 @@ namespace FrancescoSorge {
                     return (*it);
                 }
             }
-            return nullptr;
+            return 0;
         }
 
         constiterator begin() const {
@@ -114,7 +114,7 @@ namespace FrancescoSorge {
         }
 
         constiterator end() const {
-            if(first==nullptr) return constiterator(nullptr);
+            if(first==0) return constiterator(0);
             return constiterator(last+1,true);
         }
 
@@ -134,7 +134,7 @@ namespace FrancescoSorge {
                         last = temp->prev;
                     }
                     count--;
-                    temp = nullptr;
+                    temp = 0;
                     return true;
                 }
                 temp = temp->next;

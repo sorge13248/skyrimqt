@@ -10,4 +10,9 @@ string Skyrim::Weapon::getType() const {
     return type;
 }
 
+string Skyrim::Weapon::getImage() const {
+   return image;
+}
+
 const string Skyrim::Weapon::type = "Weapon";
+const string Skyrim::Weapon::image = ":/items/images/sword.png";
