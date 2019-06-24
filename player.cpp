@@ -68,7 +68,7 @@ bool Skyrim::Player::removeFromInventory(ushort index) {
 }
 
 ushort Skyrim::Player::attack() const {
-    return ((weapon->getDamage() + weapon->getQuality()) * weapon->getLevel()) + level;
+    return (weapon->getDamage() * weapon->getLevel()) + level;
 }
 
 bool Skyrim::Player::getsAttacked(ushort damage) {

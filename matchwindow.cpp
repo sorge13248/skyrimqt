@@ -147,6 +147,8 @@ void MatchWindow::updateInventory(const QString& text) {
 
     model->setStringList(list);
     ui->inventoryList->setModel(model);
+
+    ui->weaponImage->setPixmap(QPixmap(":/items/images/sword.png"));
 }
 
 void MatchWindow::updatePlayerInfo() {

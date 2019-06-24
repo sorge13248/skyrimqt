@@ -16,4 +16,10 @@
         <file>images/raider.png</file>
         <file>images/raider-boss.png</file>
     </qresource>
+    <qresource prefix="/items">
+        <file>images/axe.png</file>
+        <file>images/bow.png</file>
+        <file>images/staff.png</file>
+        <file>images/sword.png</file>
+    </qresource>
 </RCC>

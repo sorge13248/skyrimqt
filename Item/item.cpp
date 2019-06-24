@@ -1,6 +1,6 @@
 #include "Item/item.h"
 
-Skyrim::Item::Item(string name, ushort level = 1) : name(name), level(level), quality(Quality::Normal) { }
+Skyrim::Item::Item(string name, ushort level = 1) : name(name), level(level) { }
 
 string Skyrim::Item::getName() const {
     return name;
@@ -8,10 +8,6 @@ string Skyrim::Item::getName() const {
 
 ushort Skyrim::Item::getLevel() const {
     return level;
-}
-
-Skyrim::Item::Quality Skyrim::Item::getQuality() const {
-    return quality;
 }
 
 void Skyrim::Item::setName(string name) {

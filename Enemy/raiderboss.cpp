@@ -9,5 +9,5 @@ Skyrim::RaiderBoss::RaiderBoss(ushort level) : Raider(level, 100) {
 }
 
 ushort Skyrim::RaiderBoss::attack() {
-    return 5 * level;
+    return 10 * level;
 }

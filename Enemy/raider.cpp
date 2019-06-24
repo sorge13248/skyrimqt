@@ -7,5 +7,5 @@
 Skyrim::Raider::Raider(ushort level, ushort health) : Enemy("Raider", level, health, ":/enemies/images/raider.png") {}
 
 ushort Skyrim::Raider::attack() {
-    return FrancescoSorge::Basic::random(1, 5) * level;
+    return FrancescoSorge::Basic::random(5, 10) * level;
 }
