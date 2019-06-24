@@ -1,7 +1,7 @@
-#include "inventoryitem.h"
+#include "inventoryitemwindow.h"
 #include "ui_inventoryitem.h"
 
-InventoryItem::InventoryItem(Skyrim::QtGame* g, Skyrim::Item* it, ushort i, QWidget *parent) :
+InventoryItemWindow::InventoryItemWindow(Skyrim::QtGame* g, Skyrim::Item* it, ushort i, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InventoryItem),
     game(g),
@@ -25,14 +25,14 @@ InventoryItem::InventoryItem(Skyrim::QtGame* g, Skyrim::Item* it, ushort i, QWid
     setEquipped(isEquipped);
 }
 
-InventoryItem::~InventoryItem()
+InventoryItemWindow::~InventoryItemWindow()
 {
     delete ui;
 }
 
-void InventoryItem::setEquipped(bool b) {
+void InventoryItemWindow::setEquipped(bool b) {
     if (game->getPlayer()->getLevel() < item->getLevel()) {
-        QtSupport::error("This gear is too much powerful for your character's level, perhaps you cheated?", "High level gear");
+        FrancescoSorge::QtSupport::error("This gear is too much powerful for your character's level, perhaps you cheated?", "High level gear");
         item->setLevel(game->getPlayer()->getLevel());
     }
     if (b) game->getPlayer()->equipItem(item);
@@ -41,25 +41,25 @@ void InventoryItem::setEquipped(bool b) {
     ui->dropButton->setEnabled(!b);
 }
 
-void InventoryItem::on_equipButton_clicked()
+void InventoryItemWindow::on_equipButton_clicked()
 {
     setEquipped(true);
 }
 
-void InventoryItem::on_dropButton_clicked()
+void InventoryItemWindow::on_dropButton_clicked()
 {
     if (!isEquipped) {
         game->getPlayer()->removeFromInventory(index);
         close();
     }
-    else QtSupport::warning("You cannot drop an item that's equipped");
+    else FrancescoSorge::QtSupport::warning("You cannot drop an item that's equipped");
 }
 
-void InventoryItem::on_renameButton_clicked()
+void InventoryItemWindow::on_renameButton_clicked()
 {
-    QString itemName = QtSupport::input(this, "Renaming " + QString::fromStdString(item->getName()), "New item name:");
+    QString itemName = FrancescoSorge::QtSupport::input(this, "Renaming " + QString::fromStdString(item->getName()), "New item name:");
     if (itemName.isEmpty()) {
-        QtSupport::error("Item name is mandatory!");
+        FrancescoSorge::QtSupport::error("Item name is mandatory!");
     } else {
         setWindowTitle(itemName);
         ui->nameLabel->setText(itemName);
@@ -67,7 +67,7 @@ void InventoryItem::on_renameButton_clicked()
     }
 }
 
-void InventoryItem::on_closeButton_clicked()
+void InventoryItemWindow::on_closeButton_clicked()
 {
     close();
 }

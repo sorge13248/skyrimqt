@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <random>
-#include "console.h"
 #include "qtsupport.h"
 
 using std::string;

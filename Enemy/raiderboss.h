@@ -5,7 +5,6 @@
 #ifndef SKYRIM_RAIDERBOSS_H
 #define SKYRIM_RAIDERBOSS_H
 
-
 #include "raider.h"
 
 namespace Skyrim {

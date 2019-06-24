@@ -26,7 +26,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    console.cpp \
     qtgame.cpp \
     basic.cpp \
     Enemy/enemy.cpp \
@@ -41,12 +40,11 @@ SOURCES += \
     Item/shield.cpp \
     matchwindow.cpp \
     qtsupport.cpp \
-    inventoryitem.cpp \
-    loadgamewindow.cpp
+    loadgamewindow.cpp \
+    inventoryitemwindow.cpp
 
 HEADERS += \
         mainwindow.h \
-    console.h \
     qtgame.h \
     basic.h \
     Enemy/enemy.h \
@@ -63,8 +61,8 @@ HEADERS += \
     Item/shield.h \
     matchwindow.h \
     qtsupport.h \
-    inventoryitem.h \
-    loadgamewindow.h
+    loadgamewindow.h \
+    inventoryitemwindow.h
 
 FORMS += \
         mainwindow.ui \

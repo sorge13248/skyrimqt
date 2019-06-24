@@ -10,7 +10,7 @@ LoadGameWindow::LoadGameWindow(QWidget *parent) :
     QStringListModel* model = new QStringListModel(this);
 
     QStringList list;
-    foreach(QString filename, QtSupport::getFiles(QDir("."), QStringList() << "*.gamesave" << "*.GAMESAVE")) {
+    foreach(QString filename, FrancescoSorge::QtSupport::getFiles(QDir("."), QStringList() << "*.gamesave" << "*.GAMESAVE")) {
         list << filename.replace(".gamesave", "");
     }
 
@@ -25,7 +25,7 @@ LoadGameWindow::~LoadGameWindow()
 
 void LoadGameWindow::on_fileListView_clicked(const QModelIndex &index)
 {
-    MatchWindow* match = new MatchWindow(QtSupport::loadJson(QString::fromStdString("./") + index.data(Qt::DisplayRole).toString() + ".gamesave"));
+    MatchWindow* match = new MatchWindow(FrancescoSorge::QtSupport::loadJson(QString::fromStdString("./") + index.data(Qt::DisplayRole).toString() + ".gamesave"));
     match->show();
     this->close();
 }

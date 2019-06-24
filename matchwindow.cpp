@@ -84,7 +84,7 @@ void MatchWindow::initialize() {
     try {
         game->startMatch();
     } catch(Skyrim::NoPlayerLoaded) {
-        QtSupport::error("No player loaded. Something went wrong.");
+        FrancescoSorge::QtSupport::error("No player loaded. Something went wrong.");
         showMainWindow();
         this->close();
     }
@@ -211,9 +211,9 @@ void MatchWindow::on_dyamicButton_clicked() {
                     damageAbsorb = "Absorb: " + std::to_string(q->getAbsorb()) + " points";
                 }
 
-                if (QtSupport::dialog("Item dropped by enemy", QString::fromStdString(item->getName() + " (Level " + std::to_string(item->getLevel()) + ")\nType: " + item->getType() + "\n" + damageAbsorb) + "\n\nWould you like to keep it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
+                if (FrancescoSorge::QtSupport::dialog("Item dropped by enemy", QString::fromStdString(item->getName() + " (Level " + std::to_string(item->getLevel()) + ")\nType: " + item->getType() + "\n" + damageAbsorb) + "\n\nWould you like to keep it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
                     if (game->getPlayer()->addToInventory(item) == nullptr) {
-                        QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
+                        FrancescoSorge::QtSupport::warning("Your inventory is full. Drop something to free up space. Anyway, you lost the dropped item...");
                     } else {
                         updateInventory();
                     }
@@ -221,7 +221,7 @@ void MatchWindow::on_dyamicButton_clicked() {
             }
         } else {
             if (game->getPlayer()->getsAttacked(game->getEnemy()->attack())) {
-                QtSupport::info("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
+                FrancescoSorge::QtSupport::info("You died!\n\nStats:\n - Level: " + QString::number(game->getPlayer()->getLevel()) +"\n - Experience: " + QString::number(game->getPlayer()->getExperience()));
             }
         }
     }
@@ -234,12 +234,12 @@ void MatchWindow::on_inventoryList_clicked(const QModelIndex &index)
     ushort row = index.row();
     Skyrim::Item* item = game->getPlayer()->getInventory()->getByIndex(row);
     if (item) {
-        InventoryItem* inventoryWindow = new InventoryItem(game, item, row, this);
+        InventoryItemWindow* inventoryWindow = new InventoryItemWindow(game, item, row, this);
         inventoryWindow->setWindowModality(Qt::WindowModal);
         inventoryWindow->exec();
         updateInventory();
     } else {
-        QtSupport::error("Something went wrong and I cannot find the item you're looking for.");
+        FrancescoSorge::QtSupport::error("Something went wrong and I cannot find the item you're looking for.");
     }
 }
 
@@ -249,7 +249,7 @@ void MatchWindow::on_healButton_clicked()
         game->getPlayer()->heals();
         updatePlayerInfo();
     } else {
-        QtSupport::warning("You don't have any healing potion.. you're screwed HEHEHEHE");
+        FrancescoSorge::QtSupport::warning("You don't have any healing potion.. you're screwed HEHEHEHE");
     }
 }
 
@@ -257,7 +257,7 @@ void MatchWindow::on_exitButton_clicked()
 {
     bool close = true;
     if (editedFromLastSave) {
-        switch (QtSupport::dialog("Game not saved", "Would you like to save the game before exiting?", QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)) {
+        switch (FrancescoSorge::QtSupport::dialog("Game not saved", "Would you like to save the game before exiting?", QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)) {
             case QMessageBox::Save:
                 on_saveButton_clicked();
                 break;
@@ -318,7 +318,7 @@ void MatchWindow::on_saveButton_clicked()
     map.insert("inventory", inventory);
     QJsonObject object = QJsonObject::fromVariantMap(map);
 
-    QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".gamesave", object);
+    FrancescoSorge::QtSupport::saveJson("./" + QString::fromStdString(game->getPlayer()->getName()) + ".gamesave", object);
 }
 
 void MatchWindow::on_lineEdit_textChanged(const QString &text)
@@ -332,7 +332,7 @@ void MatchWindow::on_lineEdit_textChanged(const QString &text)
 
 void MatchWindow::on_cleanButton_clicked()
 {
-    if (QtSupport::dialog("Clean inventory", "This action will remove every item below your level (except those equipped). Would you like to continue?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+    if (FrancescoSorge::QtSupport::dialog("Clean inventory", "This action will remove every item below your level (except those equipped). Would you like to continue?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
 
             ushort index = 0;
             QStringList indexesToRemove;

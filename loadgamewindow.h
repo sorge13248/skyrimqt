@@ -7,7 +7,6 @@
 #include <QStringListModel>
 #include "core.h"
 #include "qtsupport.h"
-#include "console.h"
 
 #include "mainwindow.h"
 #include "matchwindow.h"

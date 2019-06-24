@@ -5,7 +5,6 @@
 #ifndef SKYRIM_RAIDER_H
 #define SKYRIM_RAIDER_H
 
-#include "../basic.h"
 #include "enemy.h"
 
 namespace Skyrim {

@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QString>
 #include "core.h"
 #include "Item/item.h"
 #include "Item/weapon.h"

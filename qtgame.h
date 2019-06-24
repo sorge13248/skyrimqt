@@ -1,7 +1,6 @@
 #ifndef QTGAME_H
 #define QTGAME_H
 
-#include "console.h"
 #include "exceptions.h"
 #include "player.h"
 #include "Item/item.h"

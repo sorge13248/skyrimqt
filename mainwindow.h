@@ -5,7 +5,6 @@
 #include <QPushButton>
 #include <QDesktopWidget>
 #include "qtsupport.h"
-#include "console.h"
 #include "qtgame.h"
 #include "matchwindow.h"
 #include "loadgamewindow.h"

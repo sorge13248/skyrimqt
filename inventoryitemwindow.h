@@ -4,7 +4,6 @@
 #include <QDialog>
 #include "core.h"
 #include "qtsupport.h"
-#include "console.h"
 #include "qtgame.h"
 #include "Item/item.h"
 #include "Item/weapon.h"
@@ -14,13 +13,13 @@ namespace Ui {
 class InventoryItem;
 }
 
-class InventoryItem : public QDialog
+class InventoryItemWindow : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit InventoryItem(Skyrim::QtGame*, Skyrim::Item*, ushort, QWidget *parent = 0);
-    ~InventoryItem();
+    explicit InventoryItemWindow(Skyrim::QtGame*, Skyrim::Item*, ushort, QWidget *parent = 0);
+    ~InventoryItemWindow();
 
 private slots:
     void on_equipButton_clicked();

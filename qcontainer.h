@@ -2,7 +2,6 @@
 #define QCONTAINER_H
 
 #include "core.h"
-#include "Item/item.h"
 
 namespace FrancescoSorge {
     template<class T>

@@ -1,7 +1,6 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "../core.h"
 #include "item.h"
 
 namespace Skyrim {

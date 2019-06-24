@@ -5,7 +5,6 @@
 #ifndef SKYRIM_GHOST_H
 #define SKYRIM_GHOST_H
 
-
 #include "enemy.h"
 
 namespace Skyrim {

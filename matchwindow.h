@@ -12,7 +12,7 @@
 #include "Item/shield.h"
 
 #include "mainwindow.h"
-#include "inventoryitem.h"
+#include "inventoryitemwindow.h"
 
 namespace Ui {
 class MatchWindow;

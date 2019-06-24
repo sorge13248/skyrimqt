@@ -1,7 +1,6 @@
 #ifndef SHIELD_H
 #define SHIELD_H
 
-#include "../core.h"
 #include "item.h"
 
 namespace Skyrim {
