@@ -1,4 +1,4 @@
-![image alt <](https://raw.githubusercontent.com/sorge13248/skyrim-qt/master/images/logo.png?token=ABC6DVNG3HH7LLP3A2UAENS5FBNFS)
+![SkyrimQt Logo](/images/logo.png)
 # SkyrimQt
 SkyrimQt is a self-made, 2D videogame inspired by Bethesda Softworks The Elder Scrolls Skyrim.
 
