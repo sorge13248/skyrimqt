@@ -20,8 +20,7 @@ I'm also planning to add a scoreboard system synced with players worldwide.
 You're free to fork it, improve it and then submit a "Pull request" if you want to improve it.
 
 ## Download binaries
-On my website, at [skyrimqt.francescosorge.com](https://skyrimqt.francescosorge.com) you can find pre-compiled binaries for Windows and macOS (I'll add a Linux version in the near future).
-You can also find binaries under "Release" of this repository.
+You can find binaries under "Release" of this repository (they're pre-release and might not work if Qt is not installed on your computer).
 
 ## Warning for my fellow students at Università degli Studi di Padova
 The teacher checks the project you submit for evaulation with others from previous exams and years and if he finds out you copied it entirely, you're basically screwed. I don't suggest you to copy. You can get inspired by my project, but do not clone it, change variables' names and pretend it to be yours. It's not.
