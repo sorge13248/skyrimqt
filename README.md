@@ -1,3 +1,6 @@
+# Project moved
+skyrimqt moved to GitLab: ![GitLab](https://gitlab.com/fsorge/skyrimqt)
+
 ![SkyrimQt Logo](/images/logo.png)
 # SkyrimQt
 SkyrimQt is a self-made, 2D videogame inspired by Bethesda Softworks The Elder Scrolls Skyrim.
