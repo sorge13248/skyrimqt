@@ -1,5 +1,5 @@
 # Project moved
-skyrimqt moved to GitLab: ![GitLab](https://gitlab.com/fsorge/skyrimqt)
+skyrimqt moved to GitLab: [GitLab](https://gitlab.com/fsorge/skyrimqt)
 
 ![SkyrimQt Logo](/images/logo.png)
 # SkyrimQt
